@@ -1,0 +1,20 @@
+@*
+*
+* to do sample project
+*
+*@
+@(vv: model.ViewValueToDo)
+@common.Default(vv.vvc) {
+    <ol>
+    @for(item <- vv.items) {
+        <li>
+          <div class="todo-item-container">
+              <div>@item.title</div>
+              <div>@item.body</div>
+              <div>@item.state</div>
+              <div>@item.category</div>
+          </div>
+        </li>
+    }
+    </ol>
+}
