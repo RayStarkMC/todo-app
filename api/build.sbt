@@ -1,6 +1,3 @@
-import sbt.Keys.*
-import sbt.*
-
 name := """api"""
 
 organization := "com.example"

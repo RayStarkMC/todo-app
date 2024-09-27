@@ -1,11 +1,11 @@
 package lib.persistence.db
 
 import java.time.LocalDateTime
-import ixias.slick.jdbc.MySQLProfile.api._
-import ixias.slick.builder._
+import ixias.slick.jdbc.MySQLProfile.api.{
+  localDateTimeColumnType => _, // IDEAのImplicits解決失敗回避のための暫定措置
+  _
+}
 import lib.model.User
-
-import java.time
 
 // UserTable: Userテーブルへのマッピングを行う
 //~~~~~~~~~~~~~~
