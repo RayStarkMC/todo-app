@@ -23,7 +23,7 @@ class GetAllToDoQuery @Inject() (
 
   private val dbio = query.result
 
-  def all(): Future[Seq[Entry]] = {
+  def run(): Future[Seq[Entry]] = {
     slave.run(dbio).map(
       _.map { record =>
         Entry(
