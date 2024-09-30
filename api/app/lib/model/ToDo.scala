@@ -13,7 +13,7 @@ case class ToDo(
   title:      String,
   body:       String,
   state:      ToDo.Status
-) extends EntityModel[ToDoCategory.Id]
+) extends EntityModel[ToDo.Id]
 
 object ToDo {
   type Id = Long @@ ToDo
