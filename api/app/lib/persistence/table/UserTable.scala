@@ -1,4 +1,4 @@
-package lib.persistence.db
+package lib.persistence.table
 
 import java.time.LocalDateTime
 import ixias.slick.jdbc.MySQLProfile.api.{
