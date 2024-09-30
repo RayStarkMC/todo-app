@@ -11,7 +11,8 @@ case class ViewValueToDoItem(
   title:    String,
   body:     String,
   state:    ViewValueState,
-  category: String
+  category: String,
+  color: String
 )
 
 sealed trait ViewValueState

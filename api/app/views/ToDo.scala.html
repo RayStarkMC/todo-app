@@ -7,13 +7,13 @@
 @common.Default(vv.vvc) {
     <ol>
     @for(item <- vv.items) {
-        <li>
-          <div class="todo-item-container">
-              <div>@item.title</div>
-              <div>@item.body</div>
-              <div>@item.state</div>
-              <div>@item.category</div>
-          </div>
+        <li style="background-color: @item.color">
+            <div class="todo-item-container">
+                <div>@item.title</div>
+                <div>@item.body</div>
+                <div>@item.state</div>
+                <div>@item.category</div>
+            </div>
         </li>
     }
     </ol>

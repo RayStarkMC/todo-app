@@ -38,6 +38,9 @@ class TodoController @Inject() (
                 case ToDo.Status.DONE        => ViewValueState.Done
               },
               category = "category1", //TODO カテゴリ関連の定義を行ったら修正
+              color = "#ffe4b5",
+              //    #00ffff
+              //    #7fffd4
             )
           }
         )
