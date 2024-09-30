@@ -30,3 +30,7 @@ class ToDoTable(tag: Tag) extends Table[ToDo](tag, "to_do") {
     )
   }
 }
+
+object ToDoTable {
+  val query = TableQuery[ToDoTable]
+}
