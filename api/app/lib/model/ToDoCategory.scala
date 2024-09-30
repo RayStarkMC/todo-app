@@ -17,7 +17,7 @@ case class ToDoCategory(
 
 object ToDoCategory {
   type Id = Long @@ ToDoCategory
-  val Id = the[Identity[Id]]
+  val Id: Identity[Id] = the[Identity[Id]]
 
   abstract class Color(val code: Short, val rgb: String) extends EnumStatus
   object Color extends EnumStatus.Of[Color] {

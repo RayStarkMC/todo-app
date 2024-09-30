@@ -20,7 +20,7 @@ case class User(
 //~~~~~~~~~~~~~~~~~~~~~~~~
 object User {
 
-  val  Id = the[Identity[Id]]
+  val  Id: Identity[Id] = the[Identity[Id]]
   type Id = Long @@ User
   type WithNoId = Entity.WithNoId [Id, User]
   type EmbeddedId = Entity.EmbeddedId[Id, User]
