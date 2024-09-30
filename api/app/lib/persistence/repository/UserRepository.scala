@@ -1,4 +1,4 @@
-package lib.persistence
+package lib.persistence.repository
 
 import scala.concurrent.{ExecutionContext, Future}
 import ixias.model._
