@@ -3,18 +3,35 @@
 * to do sample project
 *
 *@
-@(vv: model.ViewValueToDo)
+@import helper._
+
+@(vv: model.ViewValueToDo)(implicit messages: Messages)
 @common.Default(vv.vvc) {
+    <button id="openAddDialogButton" type="button" onclick="addDialog.showModal()">&#x2795</button>
     <ol>
     @for(item <- vv.items) {
         <li style="background-color: @item.color">
             <div class="todo-item-container">
                 <div>@item.title</div>
                 <div>@item.body</div>
-                <div>@item.state</div>
                 <div>@item.category</div>
+                <div>@item.state</div>
+                <div></div>
             </div>
         </li>
     }
     </ol>
+    <dialog id="addDialog">
+        ToDoの追加
+        @form(action = routes.HomeController.index()) { @*TODO 追加エンドポイントができたらそちらに置き換える*@
+            @inputText(vv.addForm("title"))
+            @inputText(vv.addForm("body"))
+            @select(
+                vv.addForm("category"),
+                options = vv.categoryOptions,
+            )
+            <button type="submit">送信</button>
+            <button type="submit" formmethod="dialog">キャンセル</button>
+        }
+    </dialog>
 }
