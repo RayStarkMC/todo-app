@@ -1,18 +1,18 @@
-package controllers
+package controllers.todo
 
 import lib.model.ToDo
 import lib.usecase.query.GetAllToDoQuery
 import model._
 import model.common.ViewValueCommon
 import play.api.data.Form
-import play.api.data.Forms.{ mapping, _ }
+import play.api.data.Forms._
 import play.api.mvc.{ Action, AnyContent, MessagesAbstractController, MessagesControllerComponents }
 
 import javax.inject.{ Inject, Singleton }
 import scala.concurrent.ExecutionContext
 
 @Singleton
-class TodoController @Inject() (
+class ViewAllTodosController @Inject() (
   val components:  MessagesControllerComponents,
   val query:       GetAllToDoQuery,
 )(
@@ -25,7 +25,7 @@ class TodoController @Inject() (
     jsSrc  = Seq("main.js")
   )
 
-  def todo(): Action[AnyContent] =
+  def run(): Action[AnyContent] =
     Action.async { implicit req =>
       for {
         result <- query.run()
