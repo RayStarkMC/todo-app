@@ -2,6 +2,7 @@ package model
 
 import model.common.ViewValueCommon
 import play.api.data.Form
+import play.api.data.Forms.{mapping, shortNumber, text}
 
 case class ViewValueToDo(
   vvc:   ViewValueCommon,
@@ -26,3 +27,12 @@ object ViewValueState {
 }
 
 case class AddForm(title: String, body: String, category: Short)
+object AddForm {
+  val form: Form[AddForm] = Form(
+    mapping(
+      "title"    -> text,
+      "body"     -> text,
+      "category" -> shortNumber
+    )(AddForm.apply)(AddForm.unapply)
+  )
+}

@@ -13,8 +13,8 @@ import scala.concurrent.ExecutionContext
 
 @Singleton
 class ViewAllTodosController @Inject() (
-  val components:  MessagesControllerComponents,
-  val query:       GetAllToDoQuery,
+  components:  MessagesControllerComponents,
+  query:       GetAllToDoQuery,
 )(
   implicit val ec: ExecutionContext
 ) extends MessagesAbstractController(components) {
@@ -25,7 +25,7 @@ class ViewAllTodosController @Inject() (
     jsSrc  = Seq("main.js")
   )
 
-  def run(): Action[AnyContent] =
+  def action(): Action[AnyContent] =
     Action.async { implicit req =>
       for {
         result <- query.run()
@@ -44,13 +44,7 @@ class ViewAllTodosController @Inject() (
               color    = entry.color.rgb
             )
           },
-          addForm         = Form(
-            mapping(
-              "title"    -> text,
-              "body"     -> text,
-              "category" -> shortNumber
-            )(AddForm.apply)(AddForm.unapply)
-          ),
+          addForm         = AddForm.form,
           categoryOptions = Seq( // TODO クエリ結果から動的に生成する
             "1" -> "category1",
             "2" -> "category2",
