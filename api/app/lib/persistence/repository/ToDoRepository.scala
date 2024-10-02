@@ -14,7 +14,7 @@ class ToDoRepository(
   @Named("master") master: Database,
   @Named("slave") slave:   Database,
 )(implicit val ec:         ExecutionContext) extends SlickRepository[ToDo.Id, ToDo] {
-  def add(user: ToDo#WithNoId): Future[ToDo#Id] = {
+  def add(user: ToDo#WithNoId): Future[ToDo.Id] = {
     val dbio = ToDoTable.query returning ToDoTable.query.map(_.id) += user.v
     master.run(dbio)
   }
