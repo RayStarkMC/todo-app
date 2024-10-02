@@ -17,7 +17,8 @@ case class ToDo(
 
 object ToDo {
   type Id = Long @@ ToDo
-  val Id: Identity[Id] = the[Identity[Id]]
+  //noinspection TypeAnnotation
+  val Id = the[Identity[Id]]
 
   sealed abstract class Status(val code: Short) extends EnumStatus
   object Status extends EnumStatus.Of[Status] {
