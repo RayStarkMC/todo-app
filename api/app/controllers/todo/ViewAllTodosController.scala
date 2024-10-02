@@ -43,11 +43,9 @@ class ViewAllTodosController @Inject() (
             )
           },
           addForm         = AddForm.form,
-          categoryOptions = Seq( // TODO クエリ結果から動的に生成する
-            "1" -> "category1",
-            "2" -> "category2",
-            "3" -> "category3",
-          )
+          categoryOptions = result.categories.map { category =>
+            category.id.toString -> category.name
+          }
         )
       } yield {
         Ok(views.html.ToDo(vvToDo))
