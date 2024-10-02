@@ -1,25 +1,32 @@
 package controllers.todo
 
+import lib.model.ToDoCategory
+import lib.usecase.command.CreateToDoCommand
 import model.AddForm
-import play.api.mvc.{ AbstractController, Action, AnyContent, ControllerComponents }
+import play.api.mvc.{AbstractController, Action, AnyContent, ControllerComponents}
 
-import javax.inject.{ Inject, Singleton }
-import scala.concurrent.{ ExecutionContext, Future }
+import javax.inject.{Inject, Singleton}
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class CreateToDoController @Inject() (
-  controllerComponents: ControllerComponents
+  controllerComponents: ControllerComponents,
+  command:              CreateToDoCommand,
 )(implicit ec:          ExecutionContext) extends AbstractController(controllerComponents) {
   def action(): Action[AnyContent] =
     Action.async { implicit req =>
       AddForm.form.bindFromRequest().fold(
-        hasErrors = rawForm => Future.successful(BadRequest),
-        success   = addForm => {
-          println(addForm) //TODO ToDo追加コマンド実装後に修正
+        rawForm => Future.successful(BadRequest),
+        addForm => {
+          val input = CreateToDoCommand.Input(
+            title      = addForm.title,
+            body       = addForm.body,
+            categoryId = ToDoCategory.Id(addForm.category)
+          )
           for {
-            a <- Future.successful(Redirect(routes.ViewAllTodosController.action()))
+            _ <- command.run(input)
           } yield {
-            a
+            Redirect(routes.ViewAllTodosController.action())
           }
         }
       )
