@@ -4,11 +4,9 @@ import lib.model.ToDo
 import lib.usecase.query.GetAllToDoQuery
 import model._
 import model.common.ViewValueCommon
-import play.api.data.Form
-import play.api.data.Forms._
-import play.api.mvc.{ Action, AnyContent, MessagesAbstractController, MessagesControllerComponents }
+import play.api.mvc.{Action, AnyContent, MessagesAbstractController, MessagesControllerComponents}
 
-import javax.inject.{ Inject, Singleton }
+import javax.inject.{Inject, Singleton}
 import scala.concurrent.ExecutionContext
 
 @Singleton
@@ -31,7 +29,7 @@ class ViewAllTodosController @Inject() (
         result <- query.run()
         vvToDo  = ViewValueToDo(
           vvc             = vvc,
-          items           = result.map { entry =>
+          items           = result.entries.map { entry =>
             ViewValueToDoItem(
               title    = entry.title,
               body     = entry.body,

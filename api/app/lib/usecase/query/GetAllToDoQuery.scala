@@ -15,18 +15,21 @@ class GetAllToDoQuery @Inject() (
 )(
   implicit val ec:       ExecutionContext
 ) {
-  def run(): Future[Seq[Entry]] = {
-    slave.run(dbio).map(
-      _.map { record =>
-        Entry(
-          title    = record._1,
-          body     = record._2,
-          state    = record._3,
-          category = record._4,
-          color    = record._5
-        )
-      }
-    )
+  def run(): Future[Output] = {
+    slave.run(dbio).map { records =>
+      Output(
+        entries = records.map { record =>
+          Entry(
+            title    = record._1,
+            body     = record._2,
+            state    = record._3,
+            category = record._4,
+            color    = record._5
+          )
+        },
+        categories = Seq.empty
+      )
+    }
   }
 }
 
