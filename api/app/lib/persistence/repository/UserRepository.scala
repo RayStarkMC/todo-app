@@ -1,4 +1,4 @@
-package lib.persistence
+package lib.persistence.repository
 
 import scala.concurrent.{ExecutionContext, Future}
 import ixias.model._
@@ -8,7 +8,7 @@ import ixias.slick.jdbc.MySQLProfile.api._
 import ixias.slick.model.DataSourceName
 import lib.model.User
 import lib.model.User.Id
-import lib.persistence.db.UserTable
+import lib.persistence.table.UserTable
 import slick.dbio.Effect
 import slick.sql.FixedSqlAction
 

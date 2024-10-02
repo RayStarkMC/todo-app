@@ -20,6 +20,7 @@ case class User(
 //~~~~~~~~~~~~~~~~~~~~~~~~
 object User {
 
+  //noinspection TypeAnnotation
   val  Id = the[Identity[Id]]
   type Id = Long @@ User
   type WithNoId = Entity.WithNoId [Id, User]
