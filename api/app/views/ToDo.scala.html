@@ -43,10 +43,10 @@
         ToDoの追加
         @form(action = todo.routes.CreateToDoController.action() ) {
           @CSRF.formField
-            @inputText(vv.addForm("title"))
-            @inputText(vv.addForm("body"))
+            @inputText(vv.createToDoForm("title"))
+            @inputText(vv.createToDoForm("body"))
             @select(
-                vv.addForm("category"),
+                vv.createToDoForm("category"),
                 options = vv.categoryOptions,
             )
             <button type="submit">送信</button>

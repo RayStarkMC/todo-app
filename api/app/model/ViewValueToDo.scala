@@ -5,39 +5,39 @@ import play.api.data.Form
 import play.api.data.Forms.{ longNumber, mapping, nonEmptyText, shortNumber, text }
 
 case class ViewValueToDo(
-  vvc:                  ViewValueCommon = ViewValueCommon(
+  vvc:                  ViewValueCommon      = ViewValueCommon(
     title  = "ToDo",
     cssSrc = Seq("main.css", "todo.css"),
     jsSrc  = Seq("main.js")
   ),
-  items:                Seq[ViewValueToDoItem],
+  items:                Seq[ToDoItem],
   categoryOptions:      Seq[(String, String)],
-  addForm:              Form[AddForm],
-  showCreateToDoDialog: Boolean         = false
+  createToDoForm:       Form[CreateToDoForm] = CreateToDoForm.form,
+  showCreateToDoDialog: Boolean              = false
 )
 
-case class ViewValueToDoItem(
+case class ToDoItem(
   title:    String,
   body:     String,
-  state:    ViewValueState,
+  state:    ToDoStatus,
   category: String,
   color:    String
 )
 
-sealed trait ViewValueState
-object ViewValueState {
-  case object ToDo       extends ViewValueState
-  case object InProgress extends ViewValueState
-  case object Done       extends ViewValueState
+sealed trait ToDoStatus
+object ToDoStatus {
+  case object ToDo       extends ToDoStatus
+  case object InProgress extends ToDoStatus
+  case object Done       extends ToDoStatus
 }
 
-case class AddForm(title: String, body: String, category: Long)
-object AddForm {
-  val form: Form[AddForm] = Form(
+case class CreateToDoForm(title: String, body: String, category: Long)
+object CreateToDoForm {
+  val form: Form[CreateToDoForm] = Form(
     mapping(
       "title"    -> nonEmptyText,
       "body"     -> text,
       "category" -> longNumber(min = 1)
-    )(AddForm.apply)(AddForm.unapply)
+    )(CreateToDoForm.apply)(CreateToDoForm.unapply)
   )
 }

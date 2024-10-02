@@ -3,7 +3,7 @@ package controllers.todo
 import lib.model.{ToDo, ToDoCategory}
 import lib.usecase.command.CreateToDoCommand
 import lib.usecase.query.GetAllToDoQuery
-import model.{AddForm, ViewValueState, ViewValueToDo, ViewValueToDoItem}
+import model.{CreateToDoForm, ToDoStatus, ViewValueToDo, ToDoItem}
 import play.api.mvc.{Action, AnyContent, MessagesAbstractController, MessagesControllerComponents}
 
 import javax.inject.{Inject, Singleton}
@@ -19,20 +19,20 @@ class CreateToDoController @Inject() (
 ) extends MessagesAbstractController(controllerComponents) {
   def action(): Action[AnyContent] =
     Action.async { implicit req =>
-      AddForm.form.bindFromRequest().fold(
+      CreateToDoForm.form.bindFromRequest().fold(
         rawForm => {
           for {
             output <- query.run()
           } yield {
             val vv = ViewValueToDo(
               items = output.entries.map { entry =>
-                ViewValueToDoItem(
+                ToDoItem(
                   title = entry.title,
                   body = entry.body,
                   state    = entry.state match {
-                    case ToDo.Status.TO_DO       => ViewValueState.ToDo
-                    case ToDo.Status.IN_PROGRESS => ViewValueState.InProgress
-                    case ToDo.Status.DONE        => ViewValueState.Done
+                    case ToDo.Status.TO_DO       => ToDoStatus.ToDo
+                    case ToDo.Status.IN_PROGRESS => ToDoStatus.InProgress
+                    case ToDo.Status.DONE        => ToDoStatus.Done
                   },
                   category = entry.category,
                   color = entry.color.rgb
@@ -41,7 +41,7 @@ class CreateToDoController @Inject() (
               categoryOptions = output.categories.map { category =>
                 category.id.toString -> category.name
               },
-              addForm = rawForm,
+              createToDoForm = rawForm,
               showCreateToDoDialog = true,
             )
             BadRequest(views.html.ToDo(vv))
