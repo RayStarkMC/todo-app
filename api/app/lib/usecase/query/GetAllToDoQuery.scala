@@ -5,7 +5,7 @@ import ixias.slick.jdbc.MySQLProfile.api._
 import lib.model.ToDo.Status
 import lib.model.ToDoCategory
 import lib.persistence.table.{ToDoCategoryTable, ToDoTable}
-import lib.usecase.query.GetAllToDoQuery.Entry
+import lib.usecase.query.GetAllToDoQuery._
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -15,25 +15,15 @@ class GetAllToDoQuery @Inject() (
 )(
   implicit val ec:       ExecutionContext
 ) {
-  private val query =
-    for {
-      toDo <- ToDoTable.query
-      toDoCategory <- ToDoCategoryTable.query if toDo.categoryId === toDoCategory.id
-    } yield {
-      (toDo.title, toDo.body, toDo.state, toDoCategory.name, toDoCategory.color)
-    }
-
-  private val dbio = query.result
-
   def run(): Future[Seq[Entry]] = {
     slave.run(dbio).map(
       _.map { record =>
         Entry(
-          title = record._1,
-          body  = record._2,
-          state = record._3,
+          title    = record._1,
+          body     = record._2,
+          state    = record._3,
           category = record._4,
-          color = record._5
+          color    = record._5
         )
       }
     )
@@ -41,11 +31,30 @@ class GetAllToDoQuery @Inject() (
 }
 
 object GetAllToDoQuery {
-  case class Entry(
-    title: String,
-    body:  String,
-    state: Status,
-    category: String,
-    color: ToDoCategory.Color
+  case class Output(
+    entries:         Seq[Entry],
+    categories: Seq[Category]
   )
+
+  case class Entry(
+    title:    String,
+    body:     String,
+    state:    Status,
+    category: String,
+    color:    ToDoCategory.Color
+  )
+
+  case class Category(
+    id:   ToDoCategory.Id,
+    name: String,
+  )
+
+  private val query =
+    for {
+      toDo         <- ToDoTable.query
+      toDoCategory <- ToDoCategoryTable.query if toDo.categoryId === toDoCategory.id
+    } yield {
+      (toDo.title, toDo.body, toDo.state, toDoCategory.name, toDoCategory.color)
+    }
+  private val dbio = query.result
 }
