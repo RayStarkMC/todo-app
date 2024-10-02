@@ -7,12 +7,15 @@ import model.{AddForm, ViewValueState, ViewValueToDo, ViewValueToDoItem}
 import play.api.mvc.{Action, AnyContent, MessagesAbstractController, MessagesControllerComponents}
 
 import javax.inject.{Inject, Singleton}
+import scala.concurrent.ExecutionContext
 
 @Singleton
 class CreateToDoController @Inject() (
   controllerComponents: MessagesControllerComponents,
   command:              CreateToDoCommand,
   query:                GetAllToDoQuery,
+)(
+  implicit ec: ExecutionContext
 ) extends MessagesAbstractController(controllerComponents) {
   def action(): Action[AnyContent] =
     Action.async { implicit req =>
