@@ -16,19 +16,11 @@ class ViewAllTodosController @Inject() (
 )(
   implicit val ec: ExecutionContext
 ) extends MessagesAbstractController(components) {
-
-  private val vvc = ViewValueCommon(
-    title  = "ToDo",
-    cssSrc = Seq("main.css", "todo.css"),
-    jsSrc  = Seq("main.js")
-  )
-
   def action(): Action[AnyContent] =
     Action.async { implicit req =>
       for {
         result <- query.run()
         vvToDo  = ViewValueToDo(
-          vvc             = vvc,
           items           = result.entries.map { entry =>
             ViewValueToDoItem(
               title    = entry.title,
