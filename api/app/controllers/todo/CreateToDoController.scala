@@ -7,14 +7,13 @@ import model.{AddForm, ViewValueState, ViewValueToDo, ViewValueToDoItem}
 import play.api.mvc.{Action, AnyContent, MessagesAbstractController, MessagesControllerComponents}
 
 import javax.inject.{Inject, Singleton}
-import scala.concurrent.ExecutionContext
 
 @Singleton
 class CreateToDoController @Inject() (
   controllerComponents: MessagesControllerComponents,
   command:              CreateToDoCommand,
   query:                GetAllToDoQuery,
-)(implicit ec:          ExecutionContext) extends MessagesAbstractController(controllerComponents) {
+) extends MessagesAbstractController(controllerComponents) {
   def action(): Action[AnyContent] =
     Action.async { implicit req =>
       AddForm.form.bindFromRequest().fold(
@@ -39,16 +38,16 @@ class CreateToDoController @Inject() (
               categoryOptions = output.categories.map { category =>
                 category.id.toString -> category.name
               },
-              addForm = rawForm
+              addForm = rawForm,
+              showCreateToDoDialog = true,
             )
             BadRequest(views.html.ToDo(vv))
           }
-        },
-        addForm => {
+        }, createToDoForm => {
           val input = CreateToDoCommand.Input(
-            title      = addForm.title,
-            body       = addForm.body,
-            categoryId = ToDoCategory.Id(addForm.category)
+            title      = createToDoForm.title,
+            body       = createToDoForm.body,
+            categoryId = ToDoCategory.Id(createToDoForm.category)
           )
           for {
             _ <- command.run(input)

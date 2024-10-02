@@ -6,8 +6,26 @@
 @import helper._
 
 @(vv: model.ViewValueToDo)(implicit request: MessagesRequestHeader)
-@common.Default(vv.vvc) {
-    <button id="openAddDialogButton" type="button" onclick="addDialog.showModal()">&#x2795</button>
+
+@script = {
+  <script type="module">
+      const createToDoDialog = document.querySelector("#createToDoDialog")
+      const openCreateToDoDialogButton = document.querySelector("#openCreateToDoDialogButton")
+
+      openCreateToDoDialogButton.onclick = () => {
+          createToDoDialog.showModal()
+      }
+
+      window.addEventListener("load", () => {
+          if (@vv.showCreateToDoDialog) {
+              createToDoDialog.showModal()
+          }
+      })
+  </script>
+}
+
+@common.Default(vv.vvc, script) {
+    <button id="openCreateToDoDialogButton" type="button" onclick="createToDoDialog.showModal()">&#x2795</button>
     <ol>
     @for(item <- vv.items) {
         <li style="background-color: @item.color">
@@ -21,7 +39,7 @@
         </li>
     }
     </ol>
-    <dialog id="addDialog">
+    <dialog id="createToDoDialog">
         ToDoの追加
         @form(action = todo.routes.CreateToDoController.action() ) {
           @CSRF.formField

@@ -2,17 +2,18 @@ package model
 
 import model.common.ViewValueCommon
 import play.api.data.Form
-import play.api.data.Forms.{longNumber, mapping, nonEmptyText, shortNumber, text}
+import play.api.data.Forms.{ longNumber, mapping, nonEmptyText, shortNumber, text }
 
 case class ViewValueToDo(
-  vvc:             ViewValueCommon = ViewValueCommon(
+  vvc:                  ViewValueCommon = ViewValueCommon(
     title  = "ToDo",
     cssSrc = Seq("main.css", "todo.css"),
     jsSrc  = Seq("main.js")
   ),
-  items:           Seq[ViewValueToDoItem],
-  categoryOptions: Seq[(String, String)],
-  addForm:         Form[AddForm]
+  items:                Seq[ViewValueToDoItem],
+  categoryOptions:      Seq[(String, String)],
+  addForm:              Form[AddForm],
+  showCreateToDoDialog: Boolean         = false
 )
 
 case class ViewValueToDoItem(
