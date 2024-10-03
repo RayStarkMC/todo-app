@@ -1,0 +1,14 @@
+@import model.ViewValueUpdateToDo
+
+@import views.html.helper._
+@(vv: ViewValueUpdateToDo)(implicit request: MessagesRequestHeader)
+@views.html.common.Default(vv.vvc) {
+    @form(action = routes.HomeController.index() ) { @*TODO 更新用エンドポイントができたら変更*@
+        @CSRF.formField
+        @inputText(vv.updateToDoForm("title"))
+        @inputText(vv.updateToDoForm("body"))
+        @select(vv.updateToDoForm("category"), vv.categoryOptions)
+        @select(vv.updateToDoForm("status"), vv.statusOptions)
+        <button type="submit">送信</button>
+    }
+}
