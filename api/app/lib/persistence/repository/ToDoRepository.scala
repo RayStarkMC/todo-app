@@ -18,4 +18,15 @@ class ToDoRepository @Inject() (
     val dbio = ToDoTable.query returning ToDoTable.query.map(_.id) += user.v
     master.run(dbio)
   }
+
+  def update(entity: ToDo#EmbeddedId): Future[Unit] = {
+    val query = ToDoTable.query.filter(_.id === entity.id)
+    val dbio = query.update(entity.v)
+
+    for {
+      _ <- master.run(dbio)
+    } yield {
+      ()
+    }
+  }
 }
