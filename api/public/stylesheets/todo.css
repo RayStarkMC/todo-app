@@ -6,3 +6,17 @@ ol {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
 }
+
+#createToDoDialog[open] {
+    width: 500px;
+    height: 500px;
+}
+
+input[type="text"] {
+    width: 20rem;
+}
+
+textarea {
+    width: 20rem;
+    height: 10rem;
+}

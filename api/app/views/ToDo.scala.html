@@ -34,7 +34,6 @@
                 <div>@item.body</div>
                 <div>@item.category</div>
                 <div>@item.state</div>
-                <div></div>
             </div>
         </li>
     }
@@ -44,7 +43,7 @@
         @form(action = todo.routes.CreateToDoController.action() ) {
           @CSRF.formField
             @inputText(vv.createToDoForm("title"))
-            @inputText(vv.createToDoForm("body"))
+            @textarea(vv.createToDoForm("body"))
             @select(
                 vv.createToDoForm("category"),
                 options = vv.categoryOptions,
