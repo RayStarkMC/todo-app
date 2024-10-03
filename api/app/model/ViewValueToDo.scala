@@ -2,7 +2,7 @@ package model
 
 import model.common.ViewValueCommon
 import play.api.data.Form
-import play.api.data.Forms.{ longNumber, mapping, nonEmptyText, shortNumber, text }
+import play.api.data.Forms._
 
 case class ViewValueToDo(
   vvc:                  ViewValueCommon      = ViewValueCommon(
