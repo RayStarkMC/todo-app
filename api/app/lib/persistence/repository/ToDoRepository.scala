@@ -14,11 +14,11 @@ class ToDoRepository @Inject() (
   @Named("master") master: Database,
   @Named("slave") slave:   Database,
 )(implicit val ec:         ExecutionContext) extends SlickRepository[ToDo.Id, ToDo] {
-  def getById(id: ToDo.Id): Future[Option[ToDo#EmbeddedId]] = {
+  def getById(id: ToDo.Id): Future[Option[ToDo]] = {
     val query = ToDoTable.query.filter(_.id === id)
     val dbio = query.result.headOption
 
-    slave.run(dbio).map(_.map(_.toEmbeddedId))
+    slave.run(dbio)
   }
 
   def add(user: ToDo#WithNoId): Future[ToDo.Id] = {
