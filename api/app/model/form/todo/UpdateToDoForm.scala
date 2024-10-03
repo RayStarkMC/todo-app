@@ -1,9 +1,9 @@
 package model.form.todo
 
 import play.api.data.Form
-import play.api.data.Forms.{ignored, longNumber, mapping, nonEmptyText, text}
+import play.api.data.Forms._
 
-case class UpdateToDoForm(title: String, body: String, category: Long, status: Long)
+case class UpdateToDoForm(title: String, body: String, category: Long, status: Short)
 
 object UpdateToDoForm {
   val form: Form[UpdateToDoForm] = Form(
@@ -11,7 +11,7 @@ object UpdateToDoForm {
       "title"    -> nonEmptyText,
       "body"     -> text,
       "category" -> longNumber(min = 1),
-      "status"   -> longNumber(min = 1)
+      "status"   -> shortNumber(min = 0)
     )(UpdateToDoForm.apply)(UpdateToDoForm.unapply)
   )
 }

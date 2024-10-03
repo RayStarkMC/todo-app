@@ -3,7 +3,7 @@
 @import views.html.helper._
 @(vv: ViewValueUpdateToDo)(implicit request: MessagesRequestHeader)
 @views.html.common.Default(vv.vvc) {
-    @form(action = routes.HomeController.index() ) { @*TODO 更新用エンドポイントができたら変更*@
+    @form(action = todo.routes.UpdateToDoController.action(vv.id)) {
         @CSRF.formField
         @inputText(vv.updateToDoForm("title"))
         @inputText(vv.updateToDoForm("body"))
