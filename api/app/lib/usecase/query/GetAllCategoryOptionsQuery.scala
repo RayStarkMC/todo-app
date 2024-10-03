@@ -1,4 +1,4 @@
-package lib.usecase.query;
+package lib.usecase.query
 
 import javax.inject._
 import ixias.slick.jdbc.MySQLProfile.api._
