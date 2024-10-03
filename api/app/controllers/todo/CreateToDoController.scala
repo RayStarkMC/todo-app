@@ -27,6 +27,7 @@ class CreateToDoController @Inject() (
             val vv = ViewValueToDo(
               items = output.entries.map { entry =>
                 ToDoItem(
+                  id = entry.id,
                   title = entry.title,
                   body = entry.body,
                   state    = entry.state match {

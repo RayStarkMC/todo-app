@@ -22,6 +22,7 @@ class ViewAllTodosController @Inject() (
         vvToDo  = ViewValueToDo(
           items           = result.entries.map { entry =>
             ToDoItem(
+              id       = entry.id,
               title    = entry.title,
               body     = entry.body,
               state    = entry.state match {

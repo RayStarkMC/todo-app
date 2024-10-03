@@ -1,5 +1,6 @@
 package model
 
+import lib.model.ToDo
 import model.common.ViewValueCommon
 import play.api.data.Form
 import play.api.data.Forms._
@@ -17,6 +18,7 @@ case class ViewValueToDo(
 )
 
 case class ToDoItem(
+  id:       ToDo.Id,
   title:    String,
   body:     String,
   state:    ToDoStatus,
