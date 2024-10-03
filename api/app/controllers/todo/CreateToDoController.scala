@@ -3,7 +3,7 @@ package controllers.todo
 import lib.model.{ToDo, ToDoCategory}
 import lib.usecase.command.CreateToDoCommand
 import lib.usecase.query.GetAllToDoQuery
-import model.{AddForm, ViewValueState, ViewValueToDo, ViewValueToDoItem}
+import model.{CreateToDoForm, ViewValueState, ViewValueToDo, ViewValueToDoItem}
 import play.api.mvc.{Action, AnyContent, MessagesAbstractController, MessagesControllerComponents}
 
 import javax.inject.{Inject, Singleton}
@@ -19,7 +19,7 @@ class CreateToDoController @Inject() (
 ) extends MessagesAbstractController(controllerComponents) {
   def action(): Action[AnyContent] =
     Action.async { implicit req =>
-      AddForm.form.bindFromRequest().fold(
+      CreateToDoForm.form.bindFromRequest().fold(
         rawForm => {
           for {
             output <- query.run()
@@ -41,7 +41,7 @@ class CreateToDoController @Inject() (
               categoryOptions = output.categories.map { category =>
                 category.id.toString -> category.name
               },
-              addForm = rawForm,
+              createToDoForm = rawForm,
               showCreateToDoDialog = true,
             )
             BadRequest(views.html.ToDo(vv))

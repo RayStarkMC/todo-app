@@ -2,7 +2,7 @@ package model
 
 import model.common.ViewValueCommon
 import play.api.data.Form
-import play.api.data.Forms.{ longNumber, mapping, nonEmptyText, shortNumber, text }
+import play.api.data.Forms._
 
 case class ViewValueToDo(
   vvc:                  ViewValueCommon = ViewValueCommon(
@@ -12,7 +12,7 @@ case class ViewValueToDo(
   ),
   items:                Seq[ViewValueToDoItem],
   categoryOptions:      Seq[(String, String)],
-  addForm:              Form[AddForm],
+  createToDoForm:       Form[CreateToDoForm],
   showCreateToDoDialog: Boolean         = false
 )
 
@@ -31,13 +31,13 @@ object ViewValueState {
   case object Done       extends ViewValueState
 }
 
-case class AddForm(title: String, body: String, category: Long)
-object AddForm {
-  val form: Form[AddForm] = Form(
+case class CreateToDoForm(title: String, body: String, category: Long)
+object CreateToDoForm {
+  val form: Form[CreateToDoForm] = Form(
     mapping(
       "title"    -> nonEmptyText,
       "body"     -> text,
       "category" -> longNumber(min = 1)
-    )(AddForm.apply)(AddForm.unapply)
+    )(CreateToDoForm.apply)(CreateToDoForm.unapply)
   )
 }

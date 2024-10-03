@@ -3,7 +3,6 @@ package controllers.todo
 import lib.model.ToDo
 import lib.usecase.query.GetAllToDoQuery
 import model._
-import model.common.ViewValueCommon
 import play.api.mvc.{Action, AnyContent, MessagesAbstractController, MessagesControllerComponents}
 
 import javax.inject.{Inject, Singleton}
@@ -34,7 +33,7 @@ class ViewAllTodosController @Inject() (
               color    = entry.color.rgb
             )
           },
-          addForm         = AddForm.form,
+          createToDoForm         = CreateToDoForm.form,
           categoryOptions = result.categories.map { category =>
             category.id.toString -> category.name
           }
