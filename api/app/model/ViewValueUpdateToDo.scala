@@ -7,7 +7,7 @@ import play.api.data.Form
 case class ViewValueUpdateToDo(
   vvc:             ViewValueCommon      = ViewValueCommon(
     title  = "ToDo編集",
-    cssSrc = Seq("main.css"),
+    cssSrc = Seq("main.css", "update-todo.css"),
     jsSrc  = Seq("main.js")
   ),
   updateToDoForm:  Form[UpdateToDoForm] = UpdateToDoForm.form,

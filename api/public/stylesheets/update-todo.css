@@ -1,0 +1,12 @@
+input[type="text"] {
+    width: 20rem;
+}
+
+textarea {
+    width: 20rem;
+    height: 10rem;
+}
+
+.multiline {
+    white-space: pre-wrap;
+}

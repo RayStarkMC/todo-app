@@ -6,7 +6,7 @@
     @form(action = todo.routes.UpdateToDoController.action(vv.id)) {
         @CSRF.formField
         @inputText(vv.updateToDoForm("title"))
-        @inputText(vv.updateToDoForm("body"))
+        @textarea(vv.updateToDoForm("body"))
         @select(vv.updateToDoForm("category"), vv.categoryOptions)
         @select(vv.updateToDoForm("status"), vv.statusOptions)
         <button type="submit">送信</button>
