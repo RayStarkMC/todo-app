@@ -1,20 +1,17 @@
 package controllers.todo
 
+import lib.AsyncMessagesInjectedController
 import lib.model.ToDo
-import lib.usecase.query.GetAllToDoQuery
+import lib.usecase.query.ViewAllToDoPageQuery
 import model._
-import play.api.mvc.{ Action, AnyContent, MessagesAbstractController, MessagesControllerComponents }
+import play.api.mvc.{ Action, AnyContent }
 
 import javax.inject.{ Inject, Singleton }
-import scala.concurrent.ExecutionContext
 
 @Singleton
 class ViewAllTodosController @Inject() (
-  components:      MessagesControllerComponents,
-  query:           GetAllToDoQuery,
-)(
-  implicit val ec: ExecutionContext
-) extends MessagesAbstractController(components) {
+  query: ViewAllToDoPageQuery,
+) extends AsyncMessagesInjectedController {
   def action(): Action[AnyContent] =
     Action.async { implicit req =>
       for {
@@ -39,7 +36,7 @@ class ViewAllTodosController @Inject() (
           }
         )
       } yield {
-        Ok(views.html.ToDo(vvToDo))
+        Ok(views.html.ViewAllToDo(vvToDo))
       }
     }
 }

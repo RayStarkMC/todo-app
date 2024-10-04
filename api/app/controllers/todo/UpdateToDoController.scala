@@ -1,20 +1,21 @@
 package controllers.todo
 
+import cats.data.OptionT
 import lib.AsyncMessagesInjectedController
-import lib.model.{ ToDo, ToDoCategory }
+import lib.model.{ToDo, ToDoCategory}
 import lib.usecase.command.UpdateToDoCommand
 import lib.usecase.command.UpdateToDoCommand.Input
-import lib.usecase.query.GetAllCategoryOptionsQuery
+import lib.usecase.query.UpdateToDoErrorRecoveryPageQuery
 import model.ViewValueUpdateToDo
 import model.form.todo.UpdateToDoForm
-import play.api.mvc.{ Action, AnyContent, Result }
+import play.api.mvc.{Action, AnyContent, Result}
 
-import javax.inject.{ Inject, Singleton }
+import javax.inject.{Inject, Singleton}
 
 @Singleton
 class UpdateToDoController @Inject() (
   command: UpdateToDoCommand,
-  query:   GetAllCategoryOptionsQuery
+  query:   UpdateToDoErrorRecoveryPageQuery
 ) extends AsyncMessagesInjectedController {
   def action(id: Long): Action[AnyContent] = Action.async { implicit request =>
     val form = UpdateToDoForm.form.bindFromRequest()
@@ -49,12 +50,11 @@ class UpdateToDoController @Inject() (
           categoryId = ToDoCategory.Id(validForm.category),
           state      = ToDo.Status.apply(validForm.status)
         )
-        for {
-          output <- command.run(input)
-        } yield {
-          output.fold[Result](NotFound) { _ => //TODO エラーページの用意
-            Redirect(controllers.todo.routes.ViewAllTodosController.action())
-          }
+
+        OptionT(command.run(input)).fold[Result](
+          NotFound
+        ) { _ =>
+          Redirect(controllers.todo.routes.ViewAllTodosController.action())
         }
       }
     )

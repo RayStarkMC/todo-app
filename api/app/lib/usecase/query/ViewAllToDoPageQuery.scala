@@ -4,12 +4,12 @@ import javax.inject.{ Inject, Named, Singleton }
 import ixias.slick.jdbc.MySQLProfile.api._
 import lib.model.{ ToDo, ToDoCategory }
 import lib.persistence.table.{ ToDoCategoryTable, ToDoTable }
-import lib.usecase.query.GetAllToDoQuery._
+import lib.usecase.query.ViewAllToDoPageQuery._
 
 import scala.concurrent.{ ExecutionContext, Future }
 
 @Singleton
-class GetAllToDoQuery @Inject() (
+class ViewAllToDoPageQuery @Inject()(
   @Named("slave") slave: Database,
 )(
   implicit val ec:       ExecutionContext
@@ -43,7 +43,7 @@ class GetAllToDoQuery @Inject() (
   }
 }
 
-object GetAllToDoQuery {
+object ViewAllToDoPageQuery {
   case class Output(
     entries:    Seq[Entry],
     categories: Seq[Category]

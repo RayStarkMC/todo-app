@@ -42,7 +42,7 @@
             @textarea(vv.createToDoForm("body"))
             @select(
                 vv.createToDoForm("category"),
-                options = vv.categoryOptions,
+                vv.categoryOptions,
             )
             <button type="submit">送信</button>
             <button type="submit" formmethod="dialog">キャンセル</button>

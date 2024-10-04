@@ -4,12 +4,12 @@ import javax.inject._
 import ixias.slick.jdbc.MySQLProfile.api._
 import lib.model.ToDoCategory
 import lib.persistence.table.ToDoCategoryTable
-import lib.usecase.query.GetAllCategoryOptionsQuery.{CategoryOption, Output, query}
+import lib.usecase.query.UpdateToDoErrorRecoveryPageQuery.{CategoryOption, Output, query}
 
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class GetAllCategoryOptionsQuery @Inject() (
+class UpdateToDoErrorRecoveryPageQuery @Inject()(
   @Named("slave") slave: Database,
 )(implicit ec: ExecutionContext) {
   def run(): Future[Output] = {
@@ -27,7 +27,7 @@ class GetAllCategoryOptionsQuery @Inject() (
     slave.run(dbio)
   }
 }
-object GetAllCategoryOptionsQuery {
+object UpdateToDoErrorRecoveryPageQuery {
   val query = for {
     categoryTable <- ToDoCategoryTable.query
   } yield {
