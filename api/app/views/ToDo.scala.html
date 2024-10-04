@@ -26,7 +26,7 @@
         <li style="background-color: @item.color">
             <div class="todo-item-container">
                 <div>@item.title</div>
-                <div>@item.body</div>
+                <div class="multiline">@item.body</div>
                 <div>@item.category</div>
                 <div>@item.state</div>
                 <button type="button" onclick="location.href='/todo/update?id=@item.id'">編集</button>
@@ -39,7 +39,7 @@
         @form(action = todo.routes.CreateToDoController.action() ) {
           @CSRF.formField
             @inputText(vv.createToDoForm("title"))
-            @inputText(vv.createToDoForm("body"))
+            @textarea(vv.createToDoForm("body"))
             @select(
                 vv.createToDoForm("category"),
                 options = vv.categoryOptions,
