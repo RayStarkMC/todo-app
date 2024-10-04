@@ -3,12 +3,24 @@
 @import views.html.helper._
 @(vv: ViewValueUpdateToDo)(implicit request: MessagesRequestHeader)
 @views.html.common.Default(vv.vvc) {
-    @form(action = todo.routes.UpdateToDoController.action(vv.id)) {
+    @form(
+        action = todo.routes.UpdateToDoController.action(vv.id),
+        args = Symbol("id") -> "edit"
+    ) {
         @CSRF.formField
         @inputText(vv.updateToDoForm("title"))
         @textarea(vv.updateToDoForm("body"))
         @select(vv.updateToDoForm("category"), vv.categoryOptions)
         @select(vv.updateToDoForm("status"), vv.statusOptions)
-        <button type="submit">送信</button>
     }
+    @form(
+        action = todo.routes.DeleteToDoController.action(vv.id),
+        args =
+            Symbol("id") -> "delete",
+        Symbol("onSubmit") -> "return window.confirm('この操作は取り消せません。続行しますか？')"
+    ) {
+        @CSRF.formField
+    }
+    <button type="submit" form="edit">送信</button>
+    <button type="submit" form="delete">削除</button>
 }
