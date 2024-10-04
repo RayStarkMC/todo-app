@@ -3,18 +3,53 @@
 * to do sample project
 *
 *@
-@(vv: model.ViewValueToDo)
-@common.Default(vv.vvc) {
+@import helper._
+
+@(vv: model.ViewValueToDo)(implicit request: MessagesRequestHeader)
+
+@script = {
+  <script type="module">
+      const createToDoDialog = document.querySelector("#createToDoDialog")
+      const openCreateToDoDialogButton = document.querySelector("#openCreateToDoDialogButton")
+
+      openCreateToDoDialogButton.onclick = () => {
+          createToDoDialog.showModal()
+      }
+
+      window.addEventListener("load", () => {
+          if (@vv.showCreateToDoDialog) {
+              createToDoDialog.showModal()
+          }
+      })
+  </script>
+}
+
+@common.Default(vv.vvc, script) {
+    <button id="openCreateToDoDialogButton" type="button" onclick="createToDoDialog.showModal()">&#x2795</button>
     <ol>
     @for(item <- vv.items) {
         <li style="background-color: @item.color">
             <div class="todo-item-container">
                 <div>@item.title</div>
-                <div>@item.body</div>
-                <div>@item.state</div>
+                <div class="multiline">@item.body</div>
                 <div>@item.category</div>
+                <div>@item.state</div>
             </div>
         </li>
     }
     </ol>
+    <dialog id="createToDoDialog">
+        ToDoの追加
+        @form(action = todo.routes.CreateToDoController.action() ) {
+          @CSRF.formField
+            @inputText(vv.createToDoForm("title"))
+            @textarea(vv.createToDoForm("body"))
+            @select(
+                vv.createToDoForm("category"),
+                options = vv.categoryOptions,
+            )
+            <button type="submit">送信</button>
+            <button type="submit" formmethod="dialog">キャンセル</button>
+        }
+    </dialog>
 }
