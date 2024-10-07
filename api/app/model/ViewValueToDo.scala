@@ -1,34 +1,36 @@
 package model
 
+import lib.model.ToDo
 import model.common.ViewValueCommon
 import play.api.data.Form
 import play.api.data.Forms._
 
 case class ViewValueToDo(
-  vvc:                  ViewValueCommon = ViewValueCommon(
+  vvc:                  ViewValueCommon      = ViewValueCommon(
     title  = "ToDo",
     cssSrc = Seq("main.css", "todo.css"),
     jsSrc  = Seq("main.js")
   ),
-  items:                Seq[ViewValueToDoItem],
+  items:                Seq[ToDoItem],
   categoryOptions:      Seq[(String, String)],
-  createToDoForm:       Form[CreateToDoForm],
-  showCreateToDoDialog: Boolean         = false
+  createToDoForm:       Form[CreateToDoForm] = CreateToDoForm.form,
+  showCreateToDoDialog: Boolean              = false
 )
 
-case class ViewValueToDoItem(
+case class ToDoItem(
+  id:       ToDo.Id,
   title:    String,
   body:     String,
-  state:    ViewValueState,
+  state:    ToDoStatus,
   category: String,
   color:    String
 )
 
-sealed trait ViewValueState
-object ViewValueState {
-  case object ToDo       extends ViewValueState
-  case object InProgress extends ViewValueState
-  case object Done       extends ViewValueState
+sealed trait ToDoStatus
+object ToDoStatus {
+  case object ToDo       extends ToDoStatus
+  case object InProgress extends ToDoStatus
+  case object Done       extends ToDoStatus
 }
 
 case class CreateToDoForm(title: String, body: String, category: Long)

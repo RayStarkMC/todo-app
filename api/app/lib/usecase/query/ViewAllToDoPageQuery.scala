@@ -2,15 +2,14 @@ package lib.usecase.query
 
 import javax.inject.{ Inject, Named, Singleton }
 import ixias.slick.jdbc.MySQLProfile.api._
-import lib.model.ToDo.Status
-import lib.model.ToDoCategory
+import lib.model.{ ToDo, ToDoCategory }
 import lib.persistence.table.{ ToDoCategoryTable, ToDoTable }
-import lib.usecase.query.GetAllToDoQuery._
+import lib.usecase.query.ViewAllToDoPageQuery._
 
 import scala.concurrent.{ ExecutionContext, Future }
 
 @Singleton
-class GetAllToDoQuery @Inject() (
+class ViewAllToDoPageQuery @Inject()(
   @Named("slave") slave: Database,
 )(
   implicit val ec:       ExecutionContext
@@ -23,11 +22,12 @@ class GetAllToDoQuery @Inject() (
       Output(
         entries    = entries.map { record =>
           Entry(
-            title    = record._1,
-            body     = record._2,
-            state    = record._3,
-            category = record._4,
-            color    = record._5
+            id       = record._1,
+            title    = record._2,
+            body     = record._3,
+            state    = record._4,
+            category = record._5,
+            color    = record._6,
           )
         },
         categories = categories.map { record =>
@@ -43,16 +43,17 @@ class GetAllToDoQuery @Inject() (
   }
 }
 
-object GetAllToDoQuery {
+object ViewAllToDoPageQuery {
   case class Output(
     entries:    Seq[Entry],
     categories: Seq[Category]
   )
 
   case class Entry(
+    id:       ToDo.Id,
     title:    String,
     body:     String,
-    state:    Status,
+    state:    ToDo.Status,
     category: String,
     color:    ToDoCategory.Color
   )
@@ -62,12 +63,12 @@ object GetAllToDoQuery {
     name: String,
   )
 
-  private val selectAllToDo             =
+  private val selectAllToDo     =
     for {
       toDo         <- ToDoTable.query
       toDoCategory <- ToDoCategoryTable.query if toDo.categoryId === toDoCategory.id
     } yield {
-      (toDo.title, toDo.body, toDo.state, toDoCategory.name, toDoCategory.color)
+      (toDo.id, toDo.title, toDo.body, toDo.state, toDoCategory.name, toDoCategory.color)
     }
   private val selectAllCategory = ToDoCategoryTable.query.map { table =>
     (table.id, table.name)
