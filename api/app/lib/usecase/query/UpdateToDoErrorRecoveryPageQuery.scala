@@ -28,6 +28,8 @@ class UpdateToDoErrorRecoveryPageQuery @Inject()(
   }
 }
 object UpdateToDoErrorRecoveryPageQuery {
+  //TODO 頻出するクエリの共通化
+  // https://github.com/RayStarkMC/todo-app/pull/3#discussion_r1787697753
   val query = for {
     categoryTable <- ToDoCategoryTable.query
   } yield {

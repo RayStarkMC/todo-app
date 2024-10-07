@@ -8,6 +8,8 @@ case class UpdateToDoForm(title: String, body: String, category: Long, status: S
 object UpdateToDoForm {
   val form: Form[UpdateToDoForm] = Form(
     mapping(
+      //TODO 使用可能な文字の制限を追加
+      // https://github.com/RayStarkMC/todo-app/pull/3#discussion_r1787746750
       "title"    -> nonEmptyText,
       "body"     -> text,
       "category" -> longNumber(min = 1),

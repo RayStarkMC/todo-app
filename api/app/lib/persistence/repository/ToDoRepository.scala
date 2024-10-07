@@ -36,4 +36,11 @@ class ToDoRepository @Inject() (
       ()
     }
   }
+
+  def delete(entity: ToDo#EmbeddedId): Future[Unit] = {
+    val query = ToDoTable.query.filter(_.id === entity.id)
+    val dbio = query.delete.map { _ => () }
+
+    master.run(dbio)
+  }
 }
