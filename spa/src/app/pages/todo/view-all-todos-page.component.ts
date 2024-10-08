@@ -21,7 +21,8 @@ export class ViewAllTodosPageComponent {
       status: 'TODO',
       category: {
         id: 1,
-        name: 'category1'
+        name: 'category1',
+        color: '#ffe4b5'
       }
     },
     {
@@ -31,7 +32,8 @@ export class ViewAllTodosPageComponent {
       status: 'IN_PROGRESS',
       category: {
         id: 1,
-        name: 'category2'
+        name: 'category2',
+        color: '#00ffff',
       }
     },
     {
@@ -41,7 +43,8 @@ export class ViewAllTodosPageComponent {
       status: 'DONE',
       category: {
         id: 1,
-        name: 'category3'
+        name: 'category3',
+        color: '#7fffd4'
       }
     }
   ]

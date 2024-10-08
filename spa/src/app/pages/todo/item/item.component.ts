@@ -1,9 +1,12 @@
 import {Component, input} from '@angular/core';
+import {NgStyle} from '@angular/common';
 
 @Component({
   selector: 'app-item',
   standalone: true,
-  imports: [],
+  imports: [
+    NgStyle
+  ],
   templateUrl: './item.component.html',
   styleUrl: './item.component.scss'
 })
@@ -19,5 +22,6 @@ export type ToDo = Readonly<{
   category: Readonly<{
     id: number,
     name: string,
+    color: string
   }>,
 }>

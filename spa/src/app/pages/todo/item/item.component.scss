@@ -1,5 +1,8 @@
 .item-container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr auto;
-  grid-template-rows: 2em;
+
+  & > * {
+    margin: 1em;
+  }
 }

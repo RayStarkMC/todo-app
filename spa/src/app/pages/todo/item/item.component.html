@@ -1,4 +1,4 @@
-<div class="item-container">
+<div class="item-container" [ngStyle]="{'background-color': state().category.color}">
   <div>{{state().title}}</div>
   <div>{{state().body}}</div>
   <div>{{state().category.name}}</div>
