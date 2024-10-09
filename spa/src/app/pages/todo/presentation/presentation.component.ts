@@ -2,16 +2,17 @@ import {Component, input} from '@angular/core';
 import {NgStyle} from '@angular/common';
 
 @Component({
-  selector: 'app-item',
+  selector: 'app-presentation',
   standalone: true,
   imports: [
     NgStyle
   ],
-  templateUrl: './item.component.html',
-  styleUrl: './item.component.scss'
+  templateUrl: './presentation.component.html',
+  styleUrl: './presentation.component.scss'
 })
-export class ItemComponent {
-  readonly state = input.required<ToDo>()
+export class PresentationComponent {
+  readonly state = input.required<ToDo[]>()
+  protected readonly console = console;
 }
 
 export type ToDo = {

@@ -1,15 +1,13 @@
 import {Component, inject, OnDestroy, OnInit, signal} from '@angular/core';
-import {ItemComponent, ToDo} from './item/item.component';
-import {ListComponent} from './list/list.component';
 import {Subject, takeUntil} from 'rxjs';
 import {ViewAllToDoPageQuery} from '../../usecase/query/view-all-to-do-page-query.service';
+import {PresentationComponent, ToDo} from './presentation/presentation.component';
 
 @Component({
   selector: 'app-view-all-page-todos',
   standalone: true,
   imports: [
-    ItemComponent,
-    ListComponent
+    PresentationComponent,
   ],
   templateUrl: './view-all-todos-page.component.html',
   styleUrl: './view-all-todos-page.component.scss'
@@ -17,7 +15,6 @@ import {ViewAllToDoPageQuery} from '../../usecase/query/view-all-to-do-page-quer
 export class ViewAllTodosPageComponent implements OnInit, OnDestroy {
   private readonly query = inject(ViewAllToDoPageQuery)
   private readonly unsubscribe = new Subject<void>()
-
 
   readonly state = signal<ToDo[]>([])
 

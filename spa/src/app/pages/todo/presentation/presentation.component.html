@@ -1,0 +1,13 @@
+<ol>
+  @for (todo of state(); track todo.id) {
+    <li>
+      <div class="item-container" [ngStyle]="{'background-color': todo.category.color}">
+        <div>{{todo.title}}</div>
+        <div>{{todo.body}}</div>
+        <div>{{todo.category.name}}</div>
+        <div>{{todo.status}}</div>
+        <button (click)="console.log('!!!!')">編集</button>
+      </div>
+    </li>
+  }
+</ol>
