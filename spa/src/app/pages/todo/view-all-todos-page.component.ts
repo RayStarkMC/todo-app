@@ -1,7 +1,9 @@
-import {Component, OnInit, signal} from '@angular/core';
+import {Component, inject, OnDestroy, OnInit, signal} from '@angular/core';
 import {ItemComponent, ToDo} from './item/item.component';
 import {ListComponent} from './list/list.component';
-import {Observable, of} from 'rxjs';
+import {BehaviorSubject, Observable, of, Subject, Subscription, takeUntil, tap} from 'rxjs';
+import {ViewAllToDoPageQuery} from '../../usecase/query/view-all-to-do-page-query.service';
+import {query} from '@angular/animations';
 
 @Component({
   selector: 'app-view-all-page-todos',
@@ -13,49 +15,20 @@ import {Observable, of} from 'rxjs';
   templateUrl: './view-all-todos-page.component.html',
   styleUrl: './view-all-todos-page.component.scss'
 })
-export class ViewAllTodosPageComponent implements OnInit {
+export class ViewAllTodosPageComponent implements OnInit, OnDestroy {
+  private readonly query = inject(ViewAllToDoPageQuery)
   readonly state = signal<ToDo[]>([])
-  
+  private unsubscribe = new Subject<void>()
+
   ngOnInit(): void {
-    mock.subscribe(this.state.set)
+    this.query.run().pipe(
+      takeUntil(this.unsubscribe),
+    ).subscribe(this.state.set)
+  }
+
+
+  ngOnDestroy(): void {
+    this.unsubscribe.next()
+    this.unsubscribe.complete()
   }
 }
-
-const mock: Observable<ToDo[]> = of(
-  [
-    {
-      id: 1,
-      title: 'title1',
-      body: 'body1',
-      status: 'TODO',
-      category: {
-        id: 1,
-        name: 'category1',
-        color: '#ffe4b5'
-      }
-    },
-    {
-      id: 2,
-      title: 'title2',
-      body: 'body2',
-      status: 'IN_PROGRESS',
-      category: {
-        id: 1,
-        name: 'category2',
-        color: '#00ffff',
-      }
-    },
-    {
-      id: 3,
-      title: 'title3',
-      body: 'body3',
-      status: 'DONE',
-      category: {
-        id: 1,
-        name: 'category3',
-        color: '#7fffd4'
-      }
-    }
-  ]
-)
-
