@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import {Component, OnInit, signal} from '@angular/core';
 import {ItemComponent, ToDo} from './item/item.component';
 import {ListComponent} from './list/list.component';
+import {Observable, of} from 'rxjs';
 
 @Component({
   selector: 'app-view-all-page-todos',
@@ -12,8 +13,16 @@ import {ListComponent} from './list/list.component';
   templateUrl: './view-all-todos-page.component.html',
   styleUrl: './view-all-todos-page.component.scss'
 })
-export class ViewAllTodosPageComponent {
-  readonly mockToDoList: ToDo[] = [
+export class ViewAllTodosPageComponent implements OnInit {
+  readonly state = signal<ToDo[]>([])
+  
+  ngOnInit(): void {
+    mock.subscribe(this.state.set)
+  }
+}
+
+const mock: Observable<ToDo[]> = of(
+  [
     {
       id: 1,
       title: 'title1',
@@ -48,4 +57,5 @@ export class ViewAllTodosPageComponent {
       }
     }
   ]
-}
+)
+
