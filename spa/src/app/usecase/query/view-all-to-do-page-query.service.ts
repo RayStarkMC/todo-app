@@ -1,50 +1,20 @@
-import {Injectable} from '@angular/core';
-import {Observable, of} from 'rxjs';
+import {inject, Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
 import {ToDo} from '../../pages/todo/item/item.component';
+import {GetAllToDoBackendApi} from '../../backend/get-all-to-do-backend-api.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ViewAllToDoPageQuery {
-  run(): Observable<ToDo[]> {
-    return mock
+  api = inject(GetAllToDoBackendApi)
+
+  run(input: Input): Observable<Output> {
+    const request = input
+    const response = this.api.run(request)
+    return response
   }
 }
 
-const mock: Observable<ToDo[]> = of(
-  [
-    {
-      id: 1,
-      title: 'title1',
-      body: 'body1',
-      status: 'TODO',
-      category: {
-        id: 1,
-        name: 'category1',
-        color: '#ffe4b5'
-      }
-    },
-    {
-      id: 2,
-      title: 'title2',
-      body: 'body2',
-      status: 'IN_PROGRESS',
-      category: {
-        id: 1,
-        name: 'category2',
-        color: '#00ffff',
-      }
-    },
-    {
-      id: 3,
-      title: 'title3',
-      body: 'body3',
-      status: 'DONE',
-      category: {
-        id: 1,
-        name: 'category3',
-        color: '#7fffd4'
-      }
-    }
-  ]
-)
+type Input = {}
+type Output = ToDo[]

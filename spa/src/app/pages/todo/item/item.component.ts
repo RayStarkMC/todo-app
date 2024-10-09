@@ -14,14 +14,14 @@ export class ItemComponent {
   readonly state = input.required<ToDo>()
 }
 
-export type ToDo = Readonly<{
+export type ToDo = {
   id: number,
   title: string,
   body: string,
   status: "TODO" | "IN_PROGRESS" | "DONE",
-  category: Readonly<{
+  category: {
     id: number,
     name: string,
     color: string
-  }>,
-}>
+  },
+}
