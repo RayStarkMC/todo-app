@@ -26,7 +26,9 @@ export class ViewAllTodosPageComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this.unsubscribe),
       )
-      .subscribe(this.state.set)
+      .subscribe(output =>
+        this.state.set(output.list)
+      )
   }
 
 

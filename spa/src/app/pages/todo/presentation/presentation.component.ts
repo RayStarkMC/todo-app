@@ -23,8 +23,7 @@ export type ToDo = {
   body: string,
   status: "TODO" | "IN_PROGRESS" | "DONE",
   category: {
-    id: number,
     name: string,
-    color: string
+    color: string,
   },
 }

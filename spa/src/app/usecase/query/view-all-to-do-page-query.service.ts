@@ -17,13 +17,14 @@ export class ViewAllToDoPageQuery {
 
 type Input = {}
 type Output = {
-  id: number,
-  title: string,
-  body: string,
-  status: "TODO" | "IN_PROGRESS" | "DONE",
-  category: {
+  list: {
     id: number,
-    name: string,
-    color: string,
-  },
-}[]
+    title: string,
+    body: string,
+    status: "TODO" | "IN_PROGRESS" | "DONE",
+    category: {
+      name: string,
+      color: string,
+    },
+  }[]
+}

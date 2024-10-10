@@ -6,61 +6,25 @@ import {Observable, of} from 'rxjs';
   providedIn: 'root'
 })
 export class GetAllToDoBackendApi {
-  private http = inject(HttpClient)
+  private readonly http = inject(HttpClient)
 
   run(request: Request): Observable<Response> {
-    return mock
+    return this.http.get<Response>("http://localhost:9000/api/todo")
   }
+
 }
 
 type Request = {}
 type Response = {
-  id: number,
-  title: string,
-  body: string,
-  status: "TODO" | "IN_PROGRESS" | "DONE"
-  category: {
+  list: {
     id: number,
-    name: string,
-    color: string,
-  },
-}[]
-
-const mock: Observable<Response> = of(
-  [
-    {
-      id: 1,
-      title: 'title1',
-      body: 'body1',
-      status: 'TODO',
-      category: {
-        id: 1,
-        name: 'category1',
-        color: '#ffe4b5'
-      }
+    title: string,
+    body: string,
+    status: "TODO" | "IN_PROGRESS" | "DONE"
+    category: {
+      name: string,
+      color: string,
     },
-    {
-      id: 2,
-      title: 'title2',
-      body: 'body2',
-      status: 'IN_PROGRESS',
-      category: {
-        id: 1,
-        name: 'category2',
-        color: '#00ffff',
-      }
-    },
-    {
-      id: 3,
-      title: 'title3',
-      body: 'body3',
-      status: 'DONE',
-      category: {
-        id: 1,
-        name: 'category3',
-        color: '#7fffd4'
-      }
-    }
-  ]
-)
+  }[]
+}
 
