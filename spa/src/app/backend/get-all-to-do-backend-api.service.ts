@@ -1,7 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
-import {ToDo} from '../pages/todo/item/item.component';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +26,7 @@ type Response = {
   },
 }[]
 
-const mock: Observable<ToDo[]> = of(
+const mock: Observable<Response> = of(
   [
     {
       id: 1,

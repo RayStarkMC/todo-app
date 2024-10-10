@@ -1,1 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+  --background-color: white;
+  --border-width: 1px;
+  --border-color: gray;
+  --top-bar-height: 2em;
+  --side-bar-width: 200px
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  background-color: var(--background-color);
+}

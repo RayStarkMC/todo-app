@@ -1,0 +1,45 @@
+header {
+  position: fixed;
+  width: 100%;
+  height: var(--top-bar-height);
+  background-color: var(--background-color);
+  text-align: center;
+  align-content: center;
+  top: 0;
+  z-index: 2;
+  border-bottom: solid var(--border-color) var(--border-width);
+}
+
+nav {
+  position: fixed;
+  top: var(--top-bar-height);
+  height: 100%;
+  width: var(--side-bar-width);
+  border-right: solid var(--border-color) var(--border-width);
+  text-align: center;
+  z-index: 1;
+  background-color: var(--background-color);
+  overflow-y: scroll;
+  scrollbar-width: thin;
+
+  & a {
+    display: block;
+    padding: 0.5em;
+
+    &:hover {
+      background-color: lightgray;
+    }
+  }
+}
+
+main {
+  overflow-y: scroll;
+  position: relative;
+  top: var(--top-bar-height);
+  left: var(--side-bar-width);
+  width: calc(100% - var(--side-bar-width));
+
+  & .page-title {
+    padding: 0.5em;
+  }
+}

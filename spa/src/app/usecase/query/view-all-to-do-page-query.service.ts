@@ -1,6 +1,5 @@
 import {inject, Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {ToDo} from '../../pages/todo/item/item.component';
 import {GetAllToDoBackendApi} from '../../backend/get-all-to-do-backend-api.service';
 
 @Injectable({
@@ -17,4 +16,14 @@ export class ViewAllToDoPageQuery {
 }
 
 type Input = {}
-type Output = ToDo[]
+type Output = {
+  id: number,
+  title: string,
+  body: string,
+  status: "TODO" | "IN_PROGRESS" | "DONE",
+  category: {
+    id: number,
+    name: string,
+    color: string,
+  },
+}[]

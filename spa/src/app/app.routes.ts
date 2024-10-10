@@ -3,6 +3,7 @@ import {ViewAllTodosPageComponent} from './pages/todo/view-all-todos-page.compon
 
 export const routes: Routes = [
   {
+    title: "ToDo",
     path: "todo",
     component: ViewAllTodosPageComponent
   },
