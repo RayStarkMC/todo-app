@@ -1,11 +1,13 @@
 import {Component, input} from '@angular/core';
 import {NgStyle} from '@angular/common';
+import {CommonComponent} from '../common/common.component';
 
 @Component({
   selector: 'app-presentation',
   standalone: true,
   imports: [
-    NgStyle
+    NgStyle,
+    CommonComponent
   ],
   templateUrl: './presentation.component.html',
   styleUrl: './presentation.component.scss'
