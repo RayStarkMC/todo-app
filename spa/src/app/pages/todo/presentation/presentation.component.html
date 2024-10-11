@@ -1,12 +1,18 @@
 <app-common title="ToDo一覧">
   <ol>
+    <!-- TODO ToDoをカテゴリ別に表示する   -->
     @for (todo of state(); track todo.id) {
       <li>
         <div class="item-container" [ngStyle]="{'background-color': todo.category.color}">
-          <div>{{ todo.title }}</div>
-          <div>{{ todo.body }}</div>
-          <div>{{ todo.category.name }}</div>
-          <div>{{ todo.status }}</div>
+          <div class="metadata-container">
+            <div class="todo-title">{{ todo.title }}</div>
+            <div class="todo-category-name">{{ todo.category.name }}</div>
+            <div class="todo-status">{{ todo.status }}</div>
+          </div>
+          <details class="todo-body">
+            <summary></summary>
+            {{ todo.body }}
+          </details>
         </div>
       </li>
     }

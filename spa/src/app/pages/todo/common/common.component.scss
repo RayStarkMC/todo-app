@@ -38,6 +38,7 @@ main {
   top: var(--top-bar-height);
   left: var(--side-bar-width);
   width: calc(100% - var(--side-bar-width));
+  max-width: calc(100% - var(--side-bar-width));
 
   & .page-title {
     padding: 0.5em;
