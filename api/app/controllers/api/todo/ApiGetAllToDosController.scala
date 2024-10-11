@@ -2,54 +2,45 @@ package controllers.api.todo
 
 import controllers.api.todo.ApiGetAllToDosController._
 import lib.AsyncBaseController
+import lib.usecase.query.api.GetAllToDosQuery
+import lib.usecase.query.api.GetAllToDosQuery.{Input, State => QueryState}
 import play.api.libs.json._
-import play.api.mvc.{ Action, AnyContent }
+import play.api.mvc.{Action, AnyContent}
 
-import javax.inject.Singleton
-import scala.concurrent.Future
+import javax.inject.{Inject, Singleton}
 
 @Singleton
-class ApiGetAllToDosController extends AsyncBaseController {
-  def action(): Action[AnyContent] = Action.async { implicit req =>
-    val response = Response(
-      list = Seq(
-        ToDo(
-          id       = 1,
-          title    = "todo1",
-          body     = "body1",
-          status   = State.TODO,
-          category = Category(
-            name  = "category1",
-            color = "#ffe4b5"
-          )
-        ),
-        ToDo(
-          id       = 2,
-          title    = "todo2",
-          body     = "body3",
-          status   = State.IN_PROGRESS,
-          category = Category(
-            name  = "category1",
-            color = "#00ffff"
-          )
-        ),
-        ToDo(
-          id       = 3,
-          title    = "todo2",
-          body     = "body3",
-          status   = State.DONE,
-          category = Category(
-            name  = "category1",
-            color = "#7fffd4"
-          )
-        )
-      )
-    )
-    val json     = Json.toJson(response)
+class ApiGetAllToDosController @Inject() (
+  query: GetAllToDosQuery,
+) extends AsyncBaseController {
 
-    Future.successful(
+  def action(): Action[AnyContent] = Action.async { implicit req =>
+    val input = Input()
+    for {
+      output <- query.run(input)
+    } yield {
+      val response = Response(
+        list = output.list.map { todo =>
+          ToDo(
+            id       = todo.id,
+            title    = todo.title,
+            body     = todo.body,
+            status   = todo.status match {
+              case QueryState.TODO        => State.TODO
+              case QueryState.IN_PROGRESS => State.IN_PROGRESS
+              case QueryState.DONE        => State.DONE
+            },
+            category = Category(
+              name = todo.category.name,
+              color = todo.category.color
+            )
+          )
+        }
+      )
+
+      val json = Json.toJson(response)
       Ok(json)
-    )
+    }
   }
 }
 
@@ -76,9 +67,9 @@ object ApiGetAllToDosController {
   )
   sealed trait State
   object State {
-    case object TODO     extends State
+    case object TODO        extends State
     case object IN_PROGRESS extends State
-    case object DONE     extends State
+    case object DONE        extends State
   }
 
   case class Category(
