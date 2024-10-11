@@ -42,5 +42,7 @@ main {
 
   & .page-title {
     padding: 0.5em;
+    overflow: hidden;
+    word-break: keep-all;
   }
 }
