@@ -56,7 +56,7 @@ class ApiGetAllToDosController extends AsyncBaseController {
 object ApiGetAllToDosController {
   implicit lazy val responseWrites: Writes[Response] = Json.writes
   implicit lazy val toDoWrites:     Writes[ToDo]     = Json.writes
-  implicit lazy val stateWrites:    Writes[State]    = Writes.apply {
+  implicit lazy val stateWrites:    Writes[State]    = Writes {
     case State.TODO        => JsString("TODO")
     case State.IN_PROGRESS => JsString("IN_PROGRESS")
     case State.DONE        => JsString("DONE")
