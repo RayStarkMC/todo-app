@@ -3,11 +3,11 @@ package controllers.api.todo
 import controllers.api.todo.ApiGetAllToDosController._
 import lib.AsyncBaseController
 import lib.usecase.query.api.GetAllToDosQuery
-import lib.usecase.query.api.GetAllToDosQuery.{Input, State => QueryState}
+import lib.usecase.query.api.GetAllToDosQuery.{ Input, State }
 import play.api.libs.json._
-import play.api.mvc.{Action, AnyContent}
+import play.api.mvc.{ Action, AnyContent }
 
-import javax.inject.{Inject, Singleton}
+import javax.inject.{ Inject, Singleton }
 
 @Singleton
 class ApiGetAllToDosController @Inject() (
@@ -19,19 +19,19 @@ class ApiGetAllToDosController @Inject() (
     for {
       output <- query.run(input)
     } yield {
-      val response = Response(
+      val response = JsResponse(
         list = output.list.map { todo =>
-          ToDo(
+          JsToDo(
             id       = todo.id,
             title    = todo.title,
             body     = todo.body,
             status   = todo.status match {
-              case QueryState.TODO        => State.TODO
-              case QueryState.IN_PROGRESS => State.IN_PROGRESS
-              case QueryState.DONE        => State.DONE
+              case State.TODO        => JsState.TODO
+              case State.IN_PROGRESS => JsState.IN_PROGRESS
+              case State.DONE        => JsState.DONE
             },
-            category = Category(
-              name = todo.category.name,
+            category = JsCategory(
+              name  = todo.category.name,
               color = todo.category.color
             )
           )
@@ -45,34 +45,34 @@ class ApiGetAllToDosController @Inject() (
 }
 
 object ApiGetAllToDosController {
-  implicit lazy val responseWrites: Writes[Response] = Json.writes
-  implicit lazy val toDoWrites:     Writes[ToDo]     = Json.writes
-  implicit lazy val stateWrites:    Writes[State]    = Writes {
-    case State.TODO        => JsString("TODO")
-    case State.IN_PROGRESS => JsString("IN_PROGRESS")
-    case State.DONE        => JsString("DONE")
+  implicit lazy val responseWrites: Writes[JsResponse]        = Json.writes
+  implicit lazy val toDoWrites:     Writes[JsToDo]     = Json.writes
+  implicit lazy val stateWrites:    Writes[JsState]    = Writes {
+    case JsState.TODO        => JsString("TODO")
+    case JsState.IN_PROGRESS => JsString("IN_PROGRESS")
+    case JsState.DONE        => JsString("DONE")
   }
-  implicit lazy val categoryWrites: Writes[Category] = Json.writes
+  implicit lazy val categoryWrites: Writes[JsCategory] = Json.writes
 
-  case class Response(
-    list: Seq[ToDo]
+  case class JsResponse(
+    list: Seq[JsToDo]
   ) {}
 
-  case class ToDo(
-    id:       Long,
-    title:    String,
-    body:     String,
-    status:   State,
-    category: Category,
+  case class JsToDo(
+                          id:       Long,
+                          title:    String,
+                          body:     String,
+                          status:   JsState,
+                          category: JsCategory,
   )
-  sealed trait State
-  object State {
-    case object TODO        extends State
-    case object IN_PROGRESS extends State
-    case object DONE        extends State
+  sealed trait JsState
+  object JsState {
+    case object TODO        extends JsState
+    case object IN_PROGRESS extends JsState
+    case object DONE        extends JsState
   }
 
-  case class Category(
+  case class JsCategory(
     name:  String,
     color: String,
   )
