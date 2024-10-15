@@ -1,12 +1,12 @@
 package lib.usecase.query.api
 
+import controllers.api.todo.ApiGetAllToDosController._
 import ixias.slick.jdbc.MySQLProfile.api._
 import lib.model.ToDo.Status
-import lib.persistence.table.{ToDoCategoryTable, ToDoTable}
-import lib.usecase.query.api.GetAllToDosQuery._
+import lib.persistence.table.{ ToDoCategoryTable, ToDoTable }
 
-import javax.inject.{Inject, Named, Singleton}
-import scala.concurrent.{ExecutionContext, Future}
+import javax.inject.{ Inject, Named, Singleton }
+import scala.concurrent.{ ExecutionContext, Future }
 
 @Singleton
 class GetAllToDosQuery @Inject() (
@@ -14,7 +14,7 @@ class GetAllToDosQuery @Inject() (
 )(
   implicit ec:           ExecutionContext
 ) {
-  def run(input: Input): Future[Output] = {
+  def run(): Future[JsResponse] = {
     val selectAllToDo =
       for {
         toDo         <- ToDoTable.query
@@ -26,18 +26,18 @@ class GetAllToDosQuery @Inject() (
     val dbio = selectAllToDo.result
 
     slave.run(dbio).map { records =>
-      Output(
+      JsResponse(
         list = records.map { record =>
-          ToDo(
+          JsToDo(
             id       = record._1,
             title    = record._2,
             body     = record._3,
             status   = record._4 match {
-              case Status.TO_DO       => State.TODO
-              case Status.IN_PROGRESS => State.IN_PROGRESS
-              case Status.DONE        => State.DONE
+              case Status.TO_DO       => JsState.TODO
+              case Status.IN_PROGRESS => JsState.IN_PROGRESS
+              case Status.DONE        => JsState.DONE
             },
-            category = Category(
+            category = JsCategory(
               name  = record._5,
               color = record._6.rgb
             )
@@ -46,30 +46,4 @@ class GetAllToDosQuery @Inject() (
       )
     }
   }
-}
-
-object GetAllToDosQuery {
-  case class Input()
-  case class Output(
-    list: Seq[ToDo],
-  )
-
-  case class ToDo(
-    id:       Long,
-    title:    String,
-    body:     String,
-    status:   State,
-    category: Category,
-  )
-  sealed trait State
-  object State {
-    case object TODO        extends State
-    case object IN_PROGRESS extends State
-    case object DONE        extends State
-  }
-
-  case class Category(
-    name:  String,
-    color: String,
-  )
 }

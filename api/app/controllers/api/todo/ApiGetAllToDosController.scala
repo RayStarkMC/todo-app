@@ -3,7 +3,6 @@ package controllers.api.todo
 import controllers.api.todo.ApiGetAllToDosController._
 import lib.AsyncBaseController
 import lib.usecase.query.api.GetAllToDosQuery
-import lib.usecase.query.api.GetAllToDosQuery.{ Input, State }
 import play.api.libs.json._
 import play.api.mvc.{ Action, AnyContent }
 
@@ -15,9 +14,8 @@ class ApiGetAllToDosController @Inject() (
 ) extends AsyncBaseController {
 
   def action(): Action[AnyContent] = Action.async { implicit req =>
-    val input = Input()
     for {
-      output <- query.run(input)
+      output <- query.run()
     } yield {
       val response = JsResponse(
         list = output.list.map { todo =>
@@ -25,11 +23,7 @@ class ApiGetAllToDosController @Inject() (
             id       = todo.id,
             title    = todo.title,
             body     = todo.body,
-            status   = todo.status match {
-              case State.TODO        => JsState.TODO
-              case State.IN_PROGRESS => JsState.IN_PROGRESS
-              case State.DONE        => JsState.DONE
-            },
+            status   = todo.status,
             category = JsCategory(
               name  = todo.category.name,
               color = todo.category.color
@@ -45,7 +39,7 @@ class ApiGetAllToDosController @Inject() (
 }
 
 object ApiGetAllToDosController {
-  implicit lazy val responseWrites: Writes[JsResponse]        = Json.writes
+  implicit lazy val responseWrites: Writes[JsResponse] = Json.writes
   implicit lazy val toDoWrites:     Writes[JsToDo]     = Json.writes
   implicit lazy val stateWrites:    Writes[JsState]    = Writes {
     case JsState.TODO        => JsString("TODO")
@@ -59,11 +53,11 @@ object ApiGetAllToDosController {
   ) {}
 
   case class JsToDo(
-                          id:       Long,
-                          title:    String,
-                          body:     String,
-                          status:   JsState,
-                          category: JsCategory,
+    id:       Long,
+    title:    String,
+    body:     String,
+    status:   JsState,
+    category: JsCategory,
   )
   sealed trait JsState
   object JsState {
