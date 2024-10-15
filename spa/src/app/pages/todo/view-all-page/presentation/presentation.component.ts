@@ -1,6 +1,6 @@
 import {Component, input} from '@angular/core';
 import {NgStyle} from '@angular/common';
-import {CommonComponent} from '../common/common.component';
+import {CommonComponent} from '../../../common/common.component';
 
 @Component({
   selector: 'app-presentation',
