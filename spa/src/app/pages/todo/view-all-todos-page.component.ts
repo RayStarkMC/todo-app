@@ -21,8 +21,7 @@ export class ViewAllTodosPageComponent implements OnInit, OnDestroy {
   readonly state = signal<ToDo[]>([])
 
   ngOnInit(): void {
-    const input = {}
-    this.query.run(input)
+    this.query.run()
       .pipe(
         takeUntil(this.unsubscribe),
       )

@@ -8,19 +8,18 @@ import {Observable} from 'rxjs';
 export class GetAllToDoBackendApi {
   private readonly http = inject(HttpClient)
 
-  run(request: Request): Observable<Response> {
+  run(): Observable<Response> {
     return this.http.get<Response>("http://localhost:9000/api/todo")
   }
 
 }
 
-type Request = {}
 type Response = {
   list: {
     id: number,
     title: string,
     body: string,
-    status: "TODO" | "IN_PROGRESS" | "DONE"
+    status: 0 | 1 | 2,
     category: {
       name: string,
       color: string,

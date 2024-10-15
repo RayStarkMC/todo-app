@@ -1,5 +1,5 @@
 import {inject, Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
+import {map, Observable} from 'rxjs';
 import {GetAllToDoBackendApi} from '../../backend/get-all-to-do-backend-api.service';
 
 @Injectable({
@@ -8,14 +8,32 @@ import {GetAllToDoBackendApi} from '../../backend/get-all-to-do-backend-api.serv
 export class ViewAllToDoPageQuery {
   api = inject(GetAllToDoBackendApi)
 
-  run(input: Input): Observable<Output> {
-    const request = input
-    const response = this.api.run(request)
-    return response
+  run(): Observable<Output> {
+    return this.api
+      .run()
+      .pipe(
+        map((response, _) => ({
+          list: response.list.map(todo => ({
+            id: todo.id,
+            title: todo.title,
+            body: todo.body,
+            status: (() => {
+              switch (todo.status) {
+                case 0:
+                  return "TODO";
+                case 1:
+                  return "IN_PROGRESS"
+                case 2:
+                  return "DONE"
+              }
+            })(),
+            category: todo.category
+          }))
+        }))
+      )
   }
 }
 
-type Input = {}
 type Output = {
   list: {
     id: number,
