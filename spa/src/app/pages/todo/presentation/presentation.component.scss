@@ -1,0 +1,47 @@
+ol {
+  list-style: none;
+  padding-inline-start: 0;
+
+  padding-left: clamp(1em, 25%, 25%);
+  padding-right: clamp(1em, 25%, 25%);
+}
+
+li {
+  margin: 1em;
+}
+
+.item-container {
+  cursor: pointer;
+  padding: 1em;
+
+  & > * {
+    //margin: 1em;
+  }
+
+  display: grid;
+
+  grid-template-rows: 1fr auto;
+  grid-row-gap: 1em;
+}
+
+.metadata-container {
+  display: grid;
+  grid-template-columns: 2fr max(1fr) max(1fr);
+}
+
+.todo-title {
+  text-overflow: ellipsis;
+  white-space: pre;
+  overflow: hidden;
+}
+
+.todo-category-name, .todo-status {
+  text-align: center;
+  word-break: keep-all;
+  overflow: hidden;
+}
+
+.todo-body {
+  white-space: break-spaces;
+  overflow-wrap: anywhere;
+}
