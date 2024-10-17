@@ -1,5 +1,7 @@
-import {Component, OnInit, signal} from '@angular/core';
+import {Component, inject, OnDestroy, OnInit, signal} from '@angular/core';
 import {PresentationComponent, State} from './presentation/presentation.component';
+import {Subject, takeUntil} from 'rxjs';
+import {CreateToDoPageQueryService} from '../../../usecase/query/create-to-do-page-query.service';
 
 @Component({
   selector: 'app-create-todo-page',
@@ -10,11 +12,11 @@ import {PresentationComponent, State} from './presentation/presentation.componen
   templateUrl: './create-todo-page.component.html',
   styleUrl: './create-todo-page.component.scss'
 })
-export class CreateTodoPageComponent implements OnInit {
+export class CreateTodoPageComponent implements OnInit, OnDestroy {
+  private readonly query = inject(CreateToDoPageQueryService)
+  private readonly unsubscribe = new Subject<void>()
+
   readonly state = signal<State>({
-    title: '',
-    body: '',
-    category: 1,
     categoryOptions: [
       {
         id: 1,
@@ -24,20 +26,17 @@ export class CreateTodoPageComponent implements OnInit {
   })
 
   ngOnInit(): void {
-    this.state.set({
-      title: 'title',
-      body: 'bodybody',
-      category: 1,
-      categoryOptions: [
-        {
-          id: 1,
-          name: "category1"
-        },
-        {
-          id: 2,
-          name: "category2"
-        }
-      ],
-    })
+    this.query.run()
+      .pipe(
+        takeUntil(this.unsubscribe),
+      )
+      .subscribe(output =>
+        this.state.set(output)
+      )
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe.next()
+    this.unsubscribe.complete()
   }
 }
