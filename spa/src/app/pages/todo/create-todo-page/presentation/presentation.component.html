@@ -1,2 +1,13 @@
-<p>presentation works!</p>
-id: {{state()}}
+<app-common title="ToDo作成">
+  <form [formGroup]="form">
+    <label for="title">Title</label>
+    <input id="title" type="text" formControlName="titleFC">
+    <label for="body">Body</label>
+    <textarea id="body" type="text" formControlName="bodyFC"></textarea>
+    <label>Category</label>
+    <select>
+      <option value="1">one</option>
+      <option value="2">two</option>
+    </select>
+  </form>
+</app-common>

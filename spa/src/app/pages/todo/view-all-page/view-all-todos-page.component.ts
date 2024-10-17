@@ -3,6 +3,7 @@ import {Subject, takeUntil} from 'rxjs';
 import {ViewAllToDoPageQuery} from '../../../usecase/query/view-all-to-do-page-query.service';
 import {PresentationComponent, ToDo} from './presentation/presentation.component';
 import {CommonComponent} from '../../common/common.component';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-view-all-page-todos',
@@ -15,6 +16,7 @@ import {CommonComponent} from '../../common/common.component';
   styleUrl: './view-all-todos-page.component.scss'
 })
 export class ViewAllTodosPageComponent implements OnInit, OnDestroy {
+  private readonly router = inject(Router)
   private readonly query = inject(ViewAllToDoPageQuery)
   private readonly unsubscribe = new Subject<void>()
 
@@ -35,4 +37,10 @@ export class ViewAllTodosPageComponent implements OnInit, OnDestroy {
     this.unsubscribe.next()
     this.unsubscribe.complete()
   }
+
+  onCreateButtonPressed() {
+    this.router.navigateByUrl("/todo/create")
+  }
+
+  protected readonly console = console;
 }
