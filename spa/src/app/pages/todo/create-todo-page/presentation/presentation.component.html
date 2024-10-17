@@ -1,13 +1,15 @@
 <app-common title="ToDo作成">
   <form [formGroup]="form">
     <label for="title">Title</label>
-    <input id="title" type="text" formControlName="titleFC">
+    <input id="title" type="text" formControlName="title">
     <label for="body">Body</label>
-    <textarea id="body" type="text" formControlName="bodyFC"></textarea>
+    <textarea id="body" type="text" formControlName="body"></textarea>
     <label>Category</label>
-    <select>
-      <option value="1">one</option>
-      <option value="2">two</option>
+    <select formControlName="category">
+      @for (option of state().categoryOptions; track option.id) {
+        <option value="{{option.id}}">{{option.name}}</option>
+      }
     </select>
   </form>
+  <button>submit</button>
 </app-common>

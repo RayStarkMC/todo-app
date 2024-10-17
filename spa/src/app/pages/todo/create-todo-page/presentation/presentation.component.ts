@@ -13,22 +13,30 @@ import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
   styleUrl: './presentation.component.scss'
 })
 export class PresentationComponent implements OnInit {
-  readonly state = input.required<number>()
-
+  readonly state = input.required<State>()
   readonly form = new FormGroup({
-    titleFC: new FormControl<string | null>(null),
-    bodyFC: new FormControl<string | null>(null),
+    title: new FormControl("", {nonNullable: true}),
+    body: new FormControl("", {nonNullable: true}),
+    category: new FormControl(1, {nonNullable: true})
   })
 
   ngOnInit(): void {
+    const s = this.state()
+
     this.form.setValue({
-      titleFC: "1",
-      bodyFC: "2",
+      title: s.title,
+      body: s.body,
+      category: s.category,
     })
   }
 }
 
-export type form = {
-  id: number,
-  name: string,
+export type State = {
+  title: string,
+  body: string,
+  category: number,
+  categoryOptions: {
+    id: number,
+    name: string,
+  }[]
 }
