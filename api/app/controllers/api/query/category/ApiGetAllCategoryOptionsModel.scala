@@ -3,7 +3,7 @@ package controllers.api.query.category
 import lib.model.ToDoCategory
 import play.api.libs.json.{Json, Writes}
 
-object ApIGetAllCategoryOptionsModel {
+object ApiGetAllCategoryOptionsModel {
   case class JsResponse(list: Seq[JsCategoryOption])
   case class JsCategoryOption(id: ToDoCategory.Id, name: String)
 
