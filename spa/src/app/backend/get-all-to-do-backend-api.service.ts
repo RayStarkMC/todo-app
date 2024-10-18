@@ -9,7 +9,7 @@ export class GetAllToDoBackendApi {
   private readonly http = inject(HttpClient)
 
   run(): Observable<Response> {
-    return this.http.get<Response>("http://localhost:9000/api/todo")
+    return this.http.get<Response>("http://localhost:9000/api/query/todo")
   }
 
 }

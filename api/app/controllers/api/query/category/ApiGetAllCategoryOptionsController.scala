@@ -1,6 +1,6 @@
-package controllers.api.category
+package controllers.api.query.category
 
-import controllers.api.category.ApIGetAllCategoryOptionsModel.{JsCategoryOption, JsResponse}
+import ApIGetAllCategoryOptionsModel.{JsCategoryOption, JsResponse}
 import lib.AsyncMessagesInjectedController
 import lib.model.ToDoCategory
 import play.api.libs.json.Json

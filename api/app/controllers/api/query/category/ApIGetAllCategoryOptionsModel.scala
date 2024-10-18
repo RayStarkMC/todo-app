@@ -1,4 +1,4 @@
-package controllers.api.category
+package controllers.api.query.category
 
 import lib.model.ToDoCategory
 import play.api.libs.json.{Json, Writes}
