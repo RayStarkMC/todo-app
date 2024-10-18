@@ -4,14 +4,15 @@
 # ~~~~
 
 # An example controller showing a sample home page
-GET         /                    controllers.HomeController.index()
-GET         /todo                controllers.todo.ViewAllTodosController.action()
-POST        /todo                controllers.todo.CreateToDoController.action()
-GET         /todo/update         controllers.todo.UpdateToDoPageController.action(id: Long)
-POST        /todo/update         controllers.todo.UpdateToDoController.action(id: Long)
-POST        /todo/delete         controllers.todo.DeleteToDoController.action(id: Long)
+GET         /                                 controllers.HomeController.index()
+GET         /todo                             controllers.todo.ViewAllTodosController.action()
+POST        /todo                             controllers.todo.CreateToDoController.action()
+GET         /todo/update                      controllers.todo.UpdateToDoPageController.action(id: Long)
+POST        /todo/update                      controllers.todo.UpdateToDoController.action(id: Long)
+POST        /todo/delete                      controllers.todo.DeleteToDoController.action(id: Long)
 
-GET         /api/todo            controllers.api.todo.ApiGetAllToDosController.action()
+GET         /api/todo                         controllers.api.todo.ApiGetAllToDosController.action()
+GET         /api/query/category-option        controllers.api.category.ApiGetAllCategoryOptionsController.action()
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file        controllers.Assets.versioned(path="/public", file: Asset)
+GET         /assets/*file                     controllers.Assets.versioned(path="/public", file: Asset)
