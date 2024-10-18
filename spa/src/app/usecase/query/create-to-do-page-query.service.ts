@@ -1,29 +1,22 @@
-import { Injectable } from '@angular/core';
-import {Observable, of} from 'rxjs';
+import {inject, Injectable} from '@angular/core';
+import {map, Observable} from 'rxjs';
+import {GetAllCategoryOptionsBackendAPIService} from '../../backend/get-all-category-options-backend-api.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CreateToDoPageQueryService {
+  private readonly api = inject(GetAllCategoryOptionsBackendAPIService)
+
   run(): Observable<Output> {
-    return of(
-      {
-        categoryOptions: [
-          {
-            id: 1,
-            name: "category1",
-          },
-          {
-            id: 2,
-            name: "category2",
-          },
-          {
-            id: 3,
-            name: "category3",
+    return this.api.run()
+      .pipe(
+        map(res => {
+          return {
+            categoryOptions: res.list
           }
-        ]
-      }
-    )
+        })
+      )
   }
 }
 
