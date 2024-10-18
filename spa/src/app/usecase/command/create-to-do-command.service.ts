@@ -1,11 +1,14 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
+import {CreateToDoBackendAPIService} from '../../backend/create-to-do-backend-api.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CreateToDoCommandService {
+  private readonly api = inject(CreateToDoBackendAPIService)
+
   run(input: Input) {
-    console.log(input)
+    this.api.run(input)
   }
 }
 
