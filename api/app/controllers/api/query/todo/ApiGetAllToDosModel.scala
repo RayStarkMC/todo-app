@@ -1,10 +1,10 @@
-package controllers.api.todo
+package controllers.api.query.todo
 
 import ixias.util.json.JsonEnvWrites
 import lib.model.ToDo
 import play.api.libs.json.{ Json, Writes }
 
-object ApiGetAllToDosControllerModel extends JsonEnvWrites {
+object ApiGetAllToDosModel extends JsonEnvWrites {
   implicit lazy val responseWrites: Writes[JsResponse] = Json.writes
   implicit lazy val toDoWrites:     Writes[JsToDo]     = Json.writes
   implicit lazy val categoryWrites: Writes[JsCategory] = Json.writes

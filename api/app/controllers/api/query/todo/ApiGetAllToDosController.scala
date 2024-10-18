@@ -1,6 +1,6 @@
-package controllers.api.todo
+package controllers.api.query.todo
 
-import controllers.api.todo.ApiGetAllToDosControllerModel._
+import ApiGetAllToDosModel._
 import lib.AsyncBaseController
 import lib.usecase.query.api.GetAllToDosQuery
 import play.api.libs.json._

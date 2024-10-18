@@ -34,7 +34,7 @@ export class ViewAllToDoPageQuery {
   }
 }
 
-type Output = {
+export type Output = {
   list: {
     id: number,
     title: string,

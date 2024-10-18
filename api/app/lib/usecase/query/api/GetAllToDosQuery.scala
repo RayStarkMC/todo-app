@@ -1,6 +1,6 @@
 package lib.usecase.query.api
 
-import controllers.api.todo.ApiGetAllToDosControllerModel._
+import controllers.api.query.todo.ApiGetAllToDosModel._
 import ixias.slick.jdbc.MySQLProfile.api._
 import lib.persistence.table.{ ToDoCategoryTable, ToDoTable }
 
