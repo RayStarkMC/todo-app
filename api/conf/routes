@@ -14,5 +14,7 @@ POST        /todo/delete                      controllers.todo.DeleteToDoControl
 GET         /api/query/todo                   controllers.api.query.todo.ApiGetAllToDosController.action()
 GET         /api/query/category-option        controllers.api.query.category.ApiGetAllCategoryOptionsController.action()
 
+POST        /api/command/todo                 controllers.api.command.todo.ApiCreateToDoController.action()
+
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file                     controllers.Assets.versioned(path="/public", file: Asset)

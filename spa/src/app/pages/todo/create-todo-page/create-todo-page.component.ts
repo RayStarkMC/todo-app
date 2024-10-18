@@ -3,6 +3,7 @@ import {FormType, PresentationComponent, State} from './presentation/presentatio
 import {Subject, takeUntil} from 'rxjs';
 import {CreateToDoPageQueryService} from '../../../usecase/query/create-to-do-page-query.service';
 import {CreateToDoCommandService} from '../../../usecase/command/create-to-do-command.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-create-todo-page',
@@ -16,6 +17,7 @@ import {CreateToDoCommandService} from '../../../usecase/command/create-to-do-co
 export class CreateTodoPageComponent implements OnInit, OnDestroy {
   private readonly query = inject(CreateToDoPageQueryService)
   private readonly service = inject(CreateToDoCommandService)
+  private readonly router = inject(Router)
 
   private readonly unsubscribe = new Subject<void>()
 
@@ -53,10 +55,17 @@ export class CreateTodoPageComponent implements OnInit, OnDestroy {
       return
     }
 
-    this.service.run({
-      title: value.title,
-      body: value.body,
-      category: value.category
-    })
+    this.service
+      .run({
+        title: value.title,
+        body: value.body,
+        category: value.category
+      })
+      .pipe(
+        takeUntil(this.unsubscribe),
+      )
+      .subscribe({
+        complete: () => this.router.navigateByUrl("/todo")
+      })
   }
 }
