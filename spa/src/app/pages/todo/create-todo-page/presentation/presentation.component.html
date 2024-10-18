@@ -1,5 +1,9 @@
 <app-common title="ToDo作成">
-  <form [formGroup]="form">
+  <form
+    id="form"
+    [formGroup]="form"
+    (ngSubmit)="onSubmit()"
+  >
     <label for="title">Title</label>
     <input id="title" type="text" formControlName="title">
     <label for="body">Body</label>
@@ -7,9 +11,9 @@
     <label>Category</label>
     <select formControlName="category">
       @for (option of state().categoryOptions; track option.id) {
-        <option value="{{option.id}}">{{option.name}}</option>
+        <option value="{{option.id}}">{{ option.name }}</option>
       }
     </select>
   </form>
-  <button>submit</button>
+  <button type="submit" form="form">送信</button>
 </app-common>

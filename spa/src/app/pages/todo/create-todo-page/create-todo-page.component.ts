@@ -1,5 +1,5 @@
 import {Component, inject, OnDestroy, OnInit, signal} from '@angular/core';
-import {PresentationComponent, State} from './presentation/presentation.component';
+import {FormType, PresentationComponent, State} from './presentation/presentation.component';
 import {Subject, takeUntil} from 'rxjs';
 import {CreateToDoPageQueryService} from '../../../usecase/query/create-to-do-page-query.service';
 
@@ -38,5 +38,9 @@ export class CreateTodoPageComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.unsubscribe.next()
     this.unsubscribe.complete()
+  }
+
+  onFormSubmitted(form: FormType) {
+    console.log(form.value)
   }
 }
