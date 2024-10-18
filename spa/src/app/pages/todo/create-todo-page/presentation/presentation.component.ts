@@ -1,6 +1,6 @@
 import {Component, input, output} from '@angular/core';
 import {CommonComponent} from '../../../common/common.component';
-import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-presentation',
@@ -15,7 +15,10 @@ import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 export class PresentationComponent {
   readonly state = input.required<State>()
   readonly form = new FormGroup({
-    title: new FormControl("", {nonNullable: true}),
+    title: new FormControl("", {
+      nonNullable: true,
+      validators: Validators.required
+    }),
     body: new FormControl("", {nonNullable: true}),
     category: new FormControl(1, {nonNullable: true})
   })

@@ -15,5 +15,5 @@
       }
     </select>
   </form>
-  <button type="submit" form="form">送信</button>
+  <button type="submit" form="form" [disabled]="!form.valid">送信</button>
 </app-common>

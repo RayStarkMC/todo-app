@@ -20,7 +20,7 @@ export class CreateToDoPageQueryService {
   }
 }
 
-type Output = {
+export type Output = {
   categoryOptions: {
     id: number,
     name: string,

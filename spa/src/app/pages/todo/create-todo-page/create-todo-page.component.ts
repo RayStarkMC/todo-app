@@ -2,6 +2,7 @@ import {Component, inject, OnDestroy, OnInit, signal} from '@angular/core';
 import {FormType, PresentationComponent, State} from './presentation/presentation.component';
 import {Subject, takeUntil} from 'rxjs';
 import {CreateToDoPageQueryService} from '../../../usecase/query/create-to-do-page-query.service';
+import {CreateToDoCommandService} from '../../../usecase/command/create-to-do-command.service';
 
 @Component({
   selector: 'app-create-todo-page',
@@ -14,6 +15,8 @@ import {CreateToDoPageQueryService} from '../../../usecase/query/create-to-do-pa
 })
 export class CreateTodoPageComponent implements OnInit, OnDestroy {
   private readonly query = inject(CreateToDoPageQueryService)
+  private readonly service = inject(CreateToDoCommandService)
+
   private readonly unsubscribe = new Subject<void>()
 
   readonly state = signal<State>({
@@ -41,6 +44,19 @@ export class CreateTodoPageComponent implements OnInit, OnDestroy {
   }
 
   onFormSubmitted(form: FormType) {
-    console.log(form.value)
+    const value = form.value
+    if (
+      value.title === undefined ||
+      value.body === undefined ||
+      value.category === undefined
+    ) {
+      return
+    }
+
+    this.service.run({
+      title: value.title,
+      body: value.body,
+      category: value.category
+    })
   }
 }
