@@ -11,7 +11,7 @@
     <label>Category</label>
     <select formControlName="category">
       @for (option of state().categoryOptions; track option.id) {
-        <option value="{{option.id}}">{{ option.name }}</option>
+        <option [ngValue]="option.id">{{ option.name }}</option>
       }
     </select>
   </form>
