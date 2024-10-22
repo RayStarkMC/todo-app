@@ -22,5 +22,12 @@
     </select>
     <div class="error-msg"></div>
   </form>
-  <button type="submit" form="form" [disabled]="!form.valid">送信</button>
+  <div class="submit-button-container">
+    <button type="submit" form="form" [disabled]="!form.valid">送信</button>
+    <div class="error-msg">
+      @if (state().submitFailed) {
+        送信に失敗しました。
+      }
+    </div>
+  </div>
 </app-common>

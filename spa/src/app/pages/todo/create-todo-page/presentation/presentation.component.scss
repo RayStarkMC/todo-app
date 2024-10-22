@@ -1,7 +1,7 @@
 form {
   display: grid;
   grid-template-columns: 1fr 20em 20em;
-  grid-template-rows: auto 10em auto;
+  grid-template-rows:auto 10em auto;
 
    & > * {
      margin: 1em;
@@ -12,8 +12,14 @@ form {
 
 .error-msg {
   font-size: 12px;
+  align-content: center;
 }
 
 button {
   margin: 1em;
+}
+
+.submit-button-container {
+  display: flex;
+  flex-direction: row;
 }

@@ -21,14 +21,17 @@ export class CreateTodoPageComponent implements OnInit, OnDestroy {
 
   private readonly unsubscribe = new Subject<void>()
 
-  readonly state = signal<State>({
-    categoryOptions: [
-      {
-        id: 1,
-        name: ""
-      }
-    ],
-  })
+  readonly state = signal<State>(
+    {
+      submitFailed: false,
+      categoryOptions: [
+        {
+          id: 1,
+          name: ""
+        }
+      ],
+    }
+  )
 
   ngOnInit(): void {
     this.query.run()
@@ -36,7 +39,12 @@ export class CreateTodoPageComponent implements OnInit, OnDestroy {
         takeUntil(this.unsubscribe),
       )
       .subscribe(output =>
-        this.state.set(output)
+        this.state.set(
+          {
+            submitFailed: false,
+            ...output,
+          }
+        )
       )
   }
 
@@ -65,7 +73,15 @@ export class CreateTodoPageComponent implements OnInit, OnDestroy {
         takeUntil(this.unsubscribe),
       )
       .subscribe({
-        complete: () => this.router.navigateByUrl("/todo")
+        complete: () => this.router.navigateByUrl("/todo"),
+        error: err => {
+          this.state.update((s) => {
+            return {
+              submitFailed: true,
+              categoryOptions: s.categoryOptions
+            }
+          })
+        }
       })
   }
 }

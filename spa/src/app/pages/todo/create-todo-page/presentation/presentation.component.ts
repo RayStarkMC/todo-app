@@ -22,8 +22,6 @@ export class PresentationComponent {
     body: new FormControl("", {nonNullable: true}),
     category: new FormControl(1, {nonNullable: true})
   })
-  //TODO バリデーション追加
-  // 削除まで実装したら対応予定
   readonly formSubmitted = output<FormType>()
 
   onSubmit() {
@@ -32,6 +30,7 @@ export class PresentationComponent {
 }
 
 export type State = {
+  submitFailed: boolean,
   categoryOptions: {
     id: number,
     name: string,
