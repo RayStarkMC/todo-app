@@ -1,6 +1,6 @@
 form {
   display: grid;
-  grid-template-columns: 1fr 20em auto;
+  grid-template-columns: 1fr 20em 20em;
   grid-template-rows: auto 10em auto;
 
    & > * {
