@@ -1,6 +1,6 @@
-import {Component, input} from '@angular/core';
+import {Component, input, output} from '@angular/core';
 import {NgStyle} from '@angular/common';
-import {CommonComponent} from '../common/common.component';
+import {CommonComponent} from '../../../common/common.component';
 
 @Component({
   selector: 'app-presentation',
@@ -14,7 +14,8 @@ import {CommonComponent} from '../common/common.component';
 })
 export class PresentationComponent {
   readonly state = input.required<ToDo[]>()
-  protected readonly console = console;
+
+  readonly createButtonClicked = output()
 }
 
 export type ToDo = {

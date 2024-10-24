@@ -1,5 +1,5 @@
-import {Component, inject, input} from '@angular/core';
-import {Router, RouterLink} from '@angular/router';
+import {Component, input} from '@angular/core';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-common',
@@ -11,6 +11,5 @@ import {Router, RouterLink} from '@angular/router';
   styleUrl: './common.component.scss'
 })
 export class CommonComponent {
-  readonly router = inject(Router)
   readonly title = input.required<string>()
 }

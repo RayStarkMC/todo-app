@@ -1,0 +1,33 @@
+<app-common title="ToDo作成">
+  <form
+    id="form"
+    [formGroup]="form"
+    (ngSubmit)="onSubmit()"
+  >
+    <label for="title">Title</label>
+    <input id="title" type="text" formControlName="title">
+    <div class="error-msg">
+      @if (!form.controls.title.valid){
+        タイトルを入力してください。
+      }
+    </div>
+    <label for="body">Body</label>
+    <textarea id="body" type="text" formControlName="body"></textarea>
+    <div class="error-msg"></div>
+    <label>Category</label>
+    <select formControlName="category">
+      @for (option of state().categoryOptions; track option.id) {
+        <option [ngValue]="option.id">{{ option.name }}</option>
+      }
+    </select>
+    <div class="error-msg"></div>
+  </form>
+  <div class="submit-button-container">
+    <button type="submit" form="form" [disabled]="!form.valid">送信</button>
+    <div class="error-msg">
+      @if (state().submitFailed) {
+        送信に失敗しました。
+      }
+    </div>
+  </div>
+</app-common>
