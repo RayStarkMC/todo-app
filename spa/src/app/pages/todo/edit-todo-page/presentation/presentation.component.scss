@@ -1,0 +1,23 @@
+form {
+  display: grid;
+  grid-template-columns: 1fr 20em 20em;
+  grid-template-rows:auto 10em auto auto;
+
+  & > * {
+    margin: 1em;
+  }
+
+  width: 800px;
+}
+
+.error-msg {
+  font-size: 12px;
+  align-content: center;
+}
+
+.submit-button-container {
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
+  margin: 1em;
+}

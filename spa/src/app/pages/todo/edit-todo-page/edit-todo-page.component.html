@@ -1,3 +1,6 @@
 <app-presentation
-  [state]="state()">
+  [state]="state()"
+  (formSubmitted)="onFormSubmitted($event)"
+  (deleted)="onDeleted()"
+>
 </app-presentation>

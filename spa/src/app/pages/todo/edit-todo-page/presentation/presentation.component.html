@@ -1,12 +1,51 @@
 @let s = state();
 
-<p>presentation works!</p>
-@switch (s.type) {
-  @case ("pre_initialized") {
-    "Now Loading"...
+<app-common title="ToDo編集">
+  @switch (s.type) {
+    @case ("pre_initialized") {
+      "Now Loading"...
+    }
+    @case ("initialized") {
+      <form
+        id="form"
+        [formGroup]="form"
+        (ngSubmit)="onSubmit()"
+      >
+        <label for="title">Title</label>
+        <input id="title" type="text" formControlName="title">
+        <div class="error-msg">
+          @if (!form.controls.title.valid){
+            タイトルを入力してください。
+          }
+        </div>
+        <label for="body">Body</label>
+        <textarea id="body" type="text" formControlName="body"></textarea>
+        <div class="error-msg"></div>
+        <label>Category</label>
+        <select formControlName="category">
+          @for (option of s.categoryOptions; track option.id) {
+            <option [ngValue]="option.id">{{ option.name }}</option>
+          }
+        </select>
+        <div class="error-msg"></div>
+        <label>Status</label>
+        <select formControlName="status">
+          @for (option of s.statusOptions; track option.id) {
+            <option [ngValue]="option.id">{{ option.name }}</option>
+          }
+        </select>
+        <div class="error-msg"></div>
+      </form>
+      <div class="submit-button-container">
+        <button type="submit" form="form" [disabled]="!form.valid">送信</button>
+        <button type="button" (click)="onDelete()">削除</button>
+        <div class="error-msg">
+          @if (s.submitFailed) {
+            送信に失敗しました。
+          }
+        </div>
+      </div>
+    }
   }
-  @case ("initialized") {
-    {{s.type}}, {{s.id}}
-  }
-}
+</app-common>
 
