@@ -1,0 +1,12 @@
+@let s = state();
+
+<p>presentation works!</p>
+@switch (s.type) {
+  @case ("pre_initialized") {
+    "Now Loading"...
+  }
+  @case ("initialized") {
+    {{s.type}}, {{s.id}}
+  }
+}
+
