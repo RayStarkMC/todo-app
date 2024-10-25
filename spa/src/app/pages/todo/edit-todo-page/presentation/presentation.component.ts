@@ -1,4 +1,4 @@
-import {Component, input, output} from '@angular/core';
+import {Component, input, OnInit, output} from '@angular/core';
 import {CommonComponent} from '../../../common/common.component';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 
@@ -13,7 +13,7 @@ import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} fr
   templateUrl: './presentation.component.html',
   styleUrl: './presentation.component.scss'
 })
-export class PresentationComponent {
+export class PresentationComponent implements OnInit {
   readonly state = input.required<State>()
   readonly form = new FormGroup({
     title: new FormControl("", {
@@ -26,6 +26,18 @@ export class PresentationComponent {
   })
   readonly formSubmitted = output<FormType>()
   readonly deleted = output()
+
+  ngOnInit(): void {
+    const s = this.state()
+    if (s.type === "initialized") {
+      this.form.setValue({
+        title: s.title,
+        body: s.body,
+        status: s.status,
+        category: s.category,
+      })
+    }
+  }
 
   onSubmit() {
     this.formSubmitted.emit(this.form.getRawValue())
